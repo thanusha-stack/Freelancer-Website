@@ -1,0 +1,40 @@
+{
+    "projects": [
+      {
+        "name": "Roserot",
+        "task": "Wireframing",
+        "status": "Pending",
+        "action": "Play"
+      },
+      {
+        "name": "CMS",
+        "task": "Design",
+        "status": "Pending",
+        "action": "Play"
+      },
+      {
+        "name": "Pingset",
+        "task": "Development",
+        "status": "In Progress",
+        "action": "Pause"
+      },
+      {
+        "name": "Flip Corp.",
+        "task": "Design",
+        "status": "Done",
+        "action": "Play"
+      }
+    ],
+    "clients": [
+      { "name": "Alex", "email": "alex@hotmail.com" },
+      { "name": "Jessica", "email": "jessica@gmail.com" },
+      { "name": "Willam", "email": "willam@yahoo.com" },
+      { "name": "Alex", "email": "alex@hotmail.com" }
+    ],
+    "earnings": {
+      "total": 12780,
+      "currency": "₹",
+      "growth": "+10%"
+    }
+  }
+  
