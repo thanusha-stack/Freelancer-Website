@@ -1,0 +1,23 @@
+[
+    {
+      "title": "Prompt Engineer for AI Character Development",
+      "price": "Fixed price - $30/hr",
+      "tags": ["Geolocation", "Geospatial Data", "Remote Sensing", "GIS", "8 more"]
+    },
+    {
+      "title": "Full-Stack Developer for React/Node.js Projects",
+      "price": "Fixed price - $45/hr",
+      "tags": ["JavaScript", "React", "Node.js", "MongoDB", "3 more"]
+    },
+    {
+      "title": "UX Designer for Mobile App Prototypes",
+      "price": "Fixed price - $35/hr",
+      "tags": ["UX Design", "Figma", "Wireframing", "Prototyping"]
+    },
+    {
+      "title": "Data Analyst - Python & SQL Expert Needed",
+      "price": "Fixed price - $40/hr",
+      "tags": ["Python", "SQL", "Power BI", "Data Visualization"]
+    }
+  ]
+  

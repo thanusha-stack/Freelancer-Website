@@ -1,0 +1,83 @@
+[
+    {
+      "name": "Akshay L.",
+      "role": "Senior GIS Developer || Remote Sensing",
+      "hourlyRate": 30,
+      "jobSuccess": 100,
+      "tags": ["Geolocation", "Geospatial Data", "Remote Sensing", "GIS"],
+      "image": "https://via.placeholder.com/80"
+    },
+    {
+      "name": "Priya S.",
+      "role": "Full-Stack Developer || React & Node.js Expert",
+      "hourlyRate": 45,
+      "jobSuccess": 98,
+      "tags": ["JavaScript", "React", "Node.js", "MongoDB"],
+      "image": "https://via.placeholder.com/80"
+    },
+    {
+      "name": "John D.",
+      "role": "UI/UX Designer || Figma & Adobe XD",
+      "hourlyRate": 40,
+      "jobSuccess": 95,
+      "tags": ["UI/UX", "Figma", "Adobe XD", "Design"],
+      "image": "https://via.placeholder.com/80"
+    },
+    {
+      "name": "Sara T.",
+      "role": "Mobile App Developer || Flutter & React Native",
+      "hourlyRate": 50,
+      "jobSuccess": 92,
+      "tags": ["Flutter", "React Native", "Mobile Apps"],
+      "image": "https://via.placeholder.com/80"
+    },
+    {
+      "name": "Rahul P.",
+      "role": "Data Scientist || Python & Machine Learning",
+      "hourlyRate": 60,
+      "jobSuccess": 97,
+      "tags": ["Python", "Machine Learning", "Data Science"],
+      "image": "https://via.placeholder.com/80"
+    },
+    {
+      "name": "Emily R.",
+      "role": "Content Writer || SEO & Copywriting",
+      "hourlyRate": 25,
+      "jobSuccess": 99,
+      "tags": ["SEO", "Copywriting", "Content Writing"],
+      "image": "https://via.placeholder.com/80"
+    },
+    {
+      "name": "Kevin B.",
+      "role": "DevOps Engineer || AWS & Docker Expert",
+      "hourlyRate": 70,
+      "jobSuccess": 90,
+      "tags": ["AWS", "Docker", "DevOps"],
+      "image": "https://via.placeholder.com/80"
+    },
+    {
+      "name": "Alice K.",
+      "role": "Blockchain Developer || Solidity & Web3",
+      "hourlyRate": 80,
+      "jobSuccess": 85,
+      "tags": ["Blockchain", "Solidity", "Web3"],
+      "image": "https://via.placeholder.com/80"
+    },
+    {
+      "name": "Michael V.",
+      "role": "Digital Marketer || Google Ads & Analytics",
+      "hourlyRate": 55,
+      "jobSuccess": 94,
+      "tags": ["Google Ads", "SEO", "Analytics"],
+      "image": "https://via.placeholder.com/80"
+    },
+    {
+      "name": "Sophia M.",
+      "role": "AI Engineer || TensorFlow & NLP",
+      "hourlyRate": 85,
+      "jobSuccess": 88,
+      "tags": ["AI", "NLP", "TensorFlow"],
+      "image": "https://via.placeholder.com/80"
+    }
+  ]
+  
