@@ -25,6 +25,17 @@ Welcome to the **Freelance Job Platform** frontend repository! This web platform
 ### Installation
  **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/freelance-job-platform-frontend.git
-   cd freelance-job-platform-frontend
+   git clone 
+   cd Freelancer-Website
+   cd Frontend
+```
+**running the application**
+ ```bash
+  npm run dev
+```
+## 🎉 Conclusion
+
+Thank you for checking out the **Freelance Job Platform**! This project aims to streamline the hiring process by connecting skilled freelancers with clients looking for talent. We hope this platform provides a seamless experience for both freelancers and clients. Contributions and feedback are welcome to help us improve and expand the platform. 
+
+Happy coding and collaborating! 🚀
 
