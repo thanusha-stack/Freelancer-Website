@@ -12,8 +12,7 @@ Welcome to the **Freelance Job Platform** frontend repository! This web platform
 ## 🛠️ Tech Stack
 
 - **Frontend:** React and vite
-- **CSS Framework:** Tailwind CSS / Bootstrap
-- **State Management:** Redux (if applicable)
+- **CSS Framework:** Tailwind CSS
 - **Others:** Axios (for API calls), React Router
 
 ## 📖 Getting Started
