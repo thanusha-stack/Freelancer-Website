@@ -1,4 +1,4 @@
-# 🌟 Freelance Job Platform - Frontend
+# 🌟 Freelance Job Platform
 
 Welcome to the **Freelance Job Platform** frontend repository! This web platform connects **freelancers** with **clients**. Freelancers can find jobs, submit proposals, and manage work, while clients can post jobs, review proposals, and hire freelancers. 
 
