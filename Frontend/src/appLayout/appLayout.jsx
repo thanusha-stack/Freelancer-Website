@@ -30,6 +30,8 @@ import FLSubHeader from '../pages/Freelancer/Subheader/Subheader';
 import JobsListPage from '../components/JobLists/JobLists';
 import JobsDash from '../components/JobSection/jobsDash';
 import JobsCard from '../components/JobLists/JobsCard.jsx/JobsCard';
+import Profile from '../pages/Freelancer/Certificy/profile/Profile';
+import { ProfileProvider } from '../pages/Freelancer/Certificy/profile/profileProvider/profilrprovider';
 
 function App() {
   
@@ -41,6 +43,8 @@ function App() {
         <Route path="/" element={<MainDashboard/>} /> 
         <Route path="/GetInfo" element={<GetInfo />} />
         <Route path="/Certify" element={<Certify />} /> 
+        <Route path="/profileProvider" element={<ProfileProvider />}/>
+        <Route path="/Profile" element={<Profile />} />
         <Route path="/FLDashboard" element={<FLDashboard /> } /> 
         <Route path="/FLHome" element={<FLHome />} />
         <Route path="/PostProject" element={<PostProject />} />
