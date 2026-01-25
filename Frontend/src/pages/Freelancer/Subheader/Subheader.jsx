@@ -34,6 +34,12 @@ function FLSubHeader() {
     navigate('/ViewProjects'); // Adjust the route as necessary
     setShowMenu(false); // Close the menu after navigation
   };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+  };
+  
   return (
     <>
       <div className="bg-black shadow-md shadow-gray-500">
@@ -93,7 +99,7 @@ function FLSubHeader() {
               >
                 View Projects
               </button>
-              <Link to="/">
+              <Link to={logout}>
               <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">
                 Log Out
               </button>
