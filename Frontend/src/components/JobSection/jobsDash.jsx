@@ -1,7 +1,12 @@
 import React from 'react';
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
+
+
 import { useNavigate } from 'react-router-dom';
 import profile from '../../assets/images/profile.svg';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const jobList = [
   {
@@ -27,10 +32,14 @@ const jobList = [
 ];
 
 const JobsDash = () => {
+  const { token } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleViewMore = () => {
-    navigate('/JobsListPage'); 
+    if (!token) {
+    navigate("/GetInfo");
+  } else
+    navigate('/JobsListPage');
   };
 
   return (
@@ -74,11 +83,14 @@ const JobsDash = () => {
               </div>
 
               {/* View Profile Button */}
-              <Link to="/JobDescription">
-              <button className="mt-4 border border-orange-500 text-orange-500 font-semibold px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white w-full">
-                View Project
-              </button>
-              </Link>
+              
+                <button onClick={() => {
+                  if (!token) navigate("/GetInfo");
+                  else navigate("/JobDescription");
+                }} className="mt-4 border border-orange-500 text-orange-500 font-semibold px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white w-full">
+                  View Project
+                </button>
+              
             </div>
           ))}
         </div>

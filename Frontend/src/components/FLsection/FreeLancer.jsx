@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import FreelancerCard from "./FLsection";
 import { useNavigate } from "react-router-dom";
-
+import { AuthContext } from "../../context/AuthContext";
+ 
 const freelancers = [
   {
     name: 'Akshay L.',
@@ -38,10 +39,15 @@ const freelancers = [
 ];
 
 const FreelancerSection = () => {
-  const navigate = useNavigate(); // Hook must be inside the component
+  const navigate = useNavigate();
+  const { token } = useContext(AuthContext);
 
   const handleSubmit = () => {
-    navigate("/FreelancerPage");
+    if (!token) {
+      navigate("/GetInfo");
+    } else {
+      navigate("/FreelancerPage");
+    }
   };
 
   return (
