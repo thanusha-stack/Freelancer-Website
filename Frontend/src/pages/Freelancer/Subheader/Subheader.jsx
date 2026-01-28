@@ -6,7 +6,6 @@ function FLSubHeader() {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate(); // Initialize useNavigate
-
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
   };
@@ -37,7 +36,7 @@ function FLSubHeader() {
 
   const logout = () => {
     localStorage.removeItem("token");
-    setToken(null);
+    navigate("/");
   };
   
   return (
@@ -99,11 +98,9 @@ function FLSubHeader() {
               >
                 View Projects
               </button>
-              <Link to={logout}>
-              <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+              <button onClick={logout}className="block w-full text-left px-4 py-2 hover:bg-gray-100">
                 Log Out
               </button>
-              </Link>
             </div>
           )}
         </div>

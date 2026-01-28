@@ -35,6 +35,10 @@ const User = mongoose.model("User", {
     enum: ["client", "freelancer", "admin"],
     default: "client",
   },
+  isProfileComplete:{
+    type:Boolean,
+    default:false,
+  },
 });
 
 // ================= AUTH MIDDLEWARE =================
@@ -123,6 +127,7 @@ app.post("/login", async (req, res) => {
     res.json({
       token,
       role: user.role,
+      isProfileComplete:user.isProfileComplete,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -166,6 +171,7 @@ app.post("/google-login", async (req, res) => {
     res.json({
       token: jwtToken,
       role: user.role,
+      isProfileComplete: user.ProfileComplete,
     });
   } catch (err) {
     res.status(401).json({ message: "Google login failed" });
