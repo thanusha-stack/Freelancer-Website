@@ -5,6 +5,7 @@ import MainDashboard from '../pages/MainDashboard';
 import FLHome from '../pages/Freelancer/home/home';
 import FLDashboard from '../pages/Freelancer/Dashboard/Dashboard';
 import Certify from '../pages/Freelancer/Certificy/Certify'
+import ClientProfileCreate from '../components/ClientProfileCreate/ClientProfileCreate';
 import ClientProfile from '../pages/Client/profile/Profile';
 import ClientHome from '../pages/Client/ClientHome/ClientHome';
 import ClientDashboard from '../pages/Client/ClientDashboard/ClientDashboard';
@@ -34,7 +35,6 @@ import Profile from '../pages/Freelancer/Certificy/profile/Profile';
 import { ProfileProvider } from '../pages/Freelancer/Certificy/profile/profileProvider/profilrprovider';
 
 function App() {
-  
   return (
     <Router>
       <Navbar />
@@ -44,6 +44,7 @@ function App() {
         <Route path="/GetInfo" element={<GetInfo />} />
         <Route path="/Certify" element={<Certify />} /> 
         <Route path="/profileProvider" element={<ProfileProvider />}/>
+        <Route path="/clientProfileCreate" element={<ClientProfileCreate />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/FLDashboard" element={<FLDashboard /> } /> 
         <Route path="/FLHome" element={<FLHome />} />
