@@ -1,6 +1,7 @@
 // FreelancerCard.js
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 
 const FreelancerCard = ({ name, role, hourlyRate, jobSuccess, tags, image }) => (
   <div className="flex flex-col justify-between p-4 bg-white border border-gray-300 rounded-lg shadow-md">

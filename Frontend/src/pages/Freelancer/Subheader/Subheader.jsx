@@ -6,7 +6,6 @@ function FLSubHeader() {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate(); // Initialize useNavigate
-
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
   };

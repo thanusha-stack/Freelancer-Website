@@ -1,4 +1,3 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from '../components/navbar/navbar';
 import Footer from '../components/footer/footer';
 import MainDashboard from '../pages/MainDashboard';
@@ -33,11 +32,14 @@ import JobsDash from '../components/JobSection/jobsDash';
 import JobsCard from '../components/JobLists/JobsCard.jsx/JobsCard';
 import Profile from '../pages/Freelancer/Certificy/profile/Profile';
 import { ProfileProvider } from '../pages/Freelancer/Certificy/profile/profileProvider/profilrprovider';
+import ProtectedRoutes from "../routes/ProtectedRoutes";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <Router>
+    <>
       <Navbar />
+<<<<<<< HEAD
     <div className="mt-16 bg-gray-100">
       <Routes>
         <Route path="/" element={<MainDashboard/>} /> 
@@ -76,6 +78,62 @@ function App() {
       </Routes>
     </div>
     </Router>
+=======
+
+      <div className="mt-16 bg-gray-100">
+        <Routes>
+          <Route path="/" element={<MainDashboard />} />
+          <Route path="/GetInfo" element={<GetInfo />} />
+          <Route path="/Certify" element={<Certify />} />
+          <Route path="/profileProvider" element={<ProfileProvider />} />
+          <Route path="/clientProfileCreate" element={<ClientProfileCreate />} />
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/FLDashboard" element={<FLDashboard />} />
+          <Route path="/FLHome" element={<FLHome />} />
+          <Route path="/PostProject" element={<PostProject />} />
+          <Route path="/ClientProfile" element={<ClientProfile />} />
+          <Route path="/ClientHome" element={<ClientHome />} />
+          <Route path="/ClientDashboard" element={<ClientDashboard />} />
+          <Route path="/Messaging" element={<Messaging />} />
+          <Route path="/AboutUS" element={<AboutUs />} />
+          <Route path="/MessageToggle" element={<MessageToggle />} />
+          <Route path="/Support" element={<Support />} />
+          <Route path="/LiveChat" element={<LiveChat />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/SignUp" element={<Signup />} />
+
+          <Route path="/FreelancerPage" element={
+            <ProtectedRoutes>
+              <FreelancerPage />
+            </ProtectedRoutes>
+          } />
+
+          <Route path="/ViewProjects" element={<ViewProjects />} />
+          <Route path="/FLViewProfile" element={
+            <ProtectedRoutes>
+              <FLViewProfile />
+            </ProtectedRoutes>} />
+          <Route path="/ClientViewProjects" element={<ClientViewProjects />} />
+          <Route path="/JobDescription" element={<JobDescription />} />
+          <Route path="/SubHeader" element={<SubHeader />} />
+          <Route path="/CLNotifyBell" element={<CLNotifyBell />} />
+          <Route path="/ClientNotification" element={<ClientNotification />} />
+          <Route path="/FLNotification" element={<FLNotification />} />
+          <Route path="/FLSubheader" element={<FLSubHeader />} />
+          <Route path="/JobsDash" element={<JobsDash />} />
+
+          <Route path="/JobsListPage" element={
+            <ProtectedRoutes>
+              <JobsListPage />
+            </ProtectedRoutes>
+          } />
+
+          <Route path="/JobsCard" element={<JobsCard />} />
+          <Route path="/footer" element={<Footer />} />
+        </Routes>
+      </div>
+    </>
+>>>>>>> f534e5395664b52478869101409bdbffd8ff082d
   );
 }
 
