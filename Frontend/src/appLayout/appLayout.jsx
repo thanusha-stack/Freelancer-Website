@@ -5,7 +5,7 @@ import FLHome from '../pages/Freelancer/home/home';
 import FLDashboard from '../pages/Freelancer/Dashboard/Dashboard';
 import Certify from '../pages/Freelancer/Certificy/Certify'
 import ClientProfileCreate from '../components/ClientProfileCreate/ClientProfileCreate';
-import ClientProfile from '../pages/Client/profile/Profile';
+import ClientProfile from '../pages/Client/profile/profile';
 import ClientHome from '../pages/Client/ClientHome/ClientHome';
 import ClientDashboard from '../pages/Client/ClientDashboard/ClientDashboard';
 import PostProject from '../pages/Client/PostProject/Post';
