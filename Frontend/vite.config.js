@@ -7,6 +7,9 @@ export default defineConfig({
   server: {
     host: '0.0.0.0', // Makes the server accessible externally
     port: 3000,
-  },  
+  },
+  build: {
+    outDir: 'build', // Changes output folder from 'dist' to 'build'
+  },
   assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg']
 })
