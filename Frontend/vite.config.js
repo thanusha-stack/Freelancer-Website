@@ -9,7 +9,7 @@ export default defineConfig({
     port: 3000,
   },
   build: {
-    outDir: 'build', // Changes output folder from 'dist' to 'build'
+    outDir: 'dist', // Publish directory set to 'dist'
   },
   assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg']
 })
