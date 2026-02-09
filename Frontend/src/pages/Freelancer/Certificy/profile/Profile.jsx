@@ -1,8 +1,8 @@
-import React, {useRef } from 'react';
+import React, { useRef } from 'react';
 
-import PlaceholderProfile from '../../../../assets/images/Profile-placeholder.jpg'
+import PlaceholderProfile from '../../../../assets/images/Profile-Placeholder.jpg'
 const Profile = () => {
-  const fileInputRef = useRef(null); 
+  const fileInputRef = useRef(null);
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
