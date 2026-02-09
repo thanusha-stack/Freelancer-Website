@@ -1,38 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import useFetch from '../../../hooks/useFetch';
 
 const ProfileCard = () => {
-  const [profileData, setProfileData] = useState(null);
+  const { data: user, loading } = useFetch("/api/users/me");
 
-  useEffect(() => {
-    const fetchedData = {
-      image: "https://via.placeholder.com/150",
-      name: "SHARAN",
-      location: "Madrid, Spain",
-      email: "johnsmith@gmail.com",
-      phone: "(+1) 904-229-5287",
-      rating: 5,
-      rate: "$5/hr",
-      summary: "Been working as a lead consultant in RealEstate for the last 5 years.",
-      workHistory: {
-        jobTitle: "Freelance Consultant",
-        position: "Senior Consultant",
-        employer: "Microsoft",
-        location: "NY, USA",
-        duration: "Jan 2016 - Jan 2020",
-        description: "Managed all the HR programs at Microsoft as a senior consultant."
-      },
-      education: {
-        degree: "High School Diploma",
-        field: "General Education",
-        duration: "Jan 2016 - Jan 2020"
-      },
-      videoSrc: "https://www.w3schools.com/html/mov_bbb.mp4"
-    };
-    setProfileData(fetchedData);
-  }, []);
+  const profileData = user ? {
+    image: "https://via.placeholder.com/150", // Static for now
+    name: user.name,
+    location: "Remote", // Schema doesn't have location yet
+    email: user.email,
+    phone: "N/A",
+    rating: 5,
+    rate: user.hourlyRate ? `$${user.hourlyRate}/hr` : "Negotiable",
+    summary: user.bio || "No summary provided.",
+    workHistory: user.experience?.[0] || {}, // Just showing first one for now matching UI structure
+    education: user.education?.[0] || {},
+    videoSrc: "https://www.w3schools.com/html/mov_bbb.mp4"
+  } : null;
 
   if (!profileData) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
@@ -54,7 +41,7 @@ const ProfileCard = () => {
             <strong>Phone:</strong> {profileData.phone}
           </p>
         </div>
-        
+
         <div className="mt-6 flex flex-col ">
           <a href="#" className="text-blue-600 hover:underline">See Resume</a>
           <a href="#" className="text-blue-600 hover:underline">See LinkedIn Profile</a>

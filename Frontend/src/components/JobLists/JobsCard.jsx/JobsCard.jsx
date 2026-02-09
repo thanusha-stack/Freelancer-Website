@@ -1,6 +1,6 @@
 import React from 'react';
 import profile from '../../../assets/images/profile.svg';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const jobList = [
   {
@@ -25,50 +25,38 @@ const jobList = [
   },
 ];
 
-function JobsCard() {
+function JobsCard({ name, budget, task, description, _id }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {jobList.map((job, index) => (
-        <div
-          key={index}
-          className="flex flex-col justify-between p-4 bg-white border border-gray-300 rounded-lg shadow-md"
-        >
-          {/* Job Header */}
-          <div className="flex items-center mb-3">
-            <div>
-              <p className="text-lg font-semibold">{job.title}</p>
-            </div>
-            <img
-              src={profile}
-              alt="Profile"
-              className="w-16 h-16 rounded-full ml-auto"
-            />
-          </div>
-
-          {/* Price & Tags */}
-          <div className="text-sm text-gray-700 mb-3">
-            <span className="font-bold">{job.price}</span>
-          </div>
-
-          <div className="flex flex-wrap mt-2 space-x-2">
-            {job.tags.map((tag, tagIndex) => (
-              <span
-                key={tagIndex}
-                className="bg-gray-200 text-gray-600 text-xs font-medium px-2 py-1 rounded"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {/* View Profile Button */}
-          <Link to="/JobDescription">
-          <button className="mt-4 border border-orange-500 text-orange-500 font-semibold px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white w-full">
-            View Project
-          </button>
-          </Link>
+    <div className="flex flex-col justify-between p-4 bg-white border border-gray-300 rounded-lg shadow-md h-full">
+      {/* Job Header */}
+      <div className="flex items-center mb-3">
+        <div>
+          <p className="text-lg font-semibold">{name}</p>
         </div>
-      ))}
+        <img
+          src={profile}
+          alt="Profile"
+          className="w-16 h-16 rounded-full ml-auto"
+        />
+      </div>
+
+      {/* Price & Tags */}
+      <div className="text-sm text-gray-700 mb-3">
+        <span className="font-bold">{budget ? `$${budget}` : "Negotiable"}</span>
+      </div>
+
+      <div className="flex flex-wrap mt-2 space-x-2">
+        <span className="bg-gray-200 text-gray-600 text-xs font-medium px-2 py-1 rounded">
+          {task}
+        </span>
+      </div>
+
+      {/* View Profile Button */}
+      <Link to="/JobDescription" state={{ job: { name, budget, task, description, _id } }}>
+        <button className="mt-4 border border-orange-500 text-orange-500 font-semibold px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white w-full">
+          View Project
+        </button>
+      </Link>
     </div>
   );
 }

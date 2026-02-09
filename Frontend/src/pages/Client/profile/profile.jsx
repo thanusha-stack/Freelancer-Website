@@ -1,17 +1,23 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import Profile from "../../Freelancer/Certificy/profile/Profile";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../../../context/AuthContext";
 
 function ClientProfile() {
+  const { token, refreshProfileStatus } = useContext(AuthContext);
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [profileData, setProfileData] = useState({
     name: "",
     companyName: "",
-    emailID: "",
+    contactPerson: "",
     location: "",
     country: "United States",
     phone: "",
-    otp: "",
+    website: "",
+    industry: "Technology",
+    description: "",
   });
 
   const handleInputChange = (e) => {
@@ -36,8 +42,23 @@ function ClientProfile() {
     fileInputRef.current.click();
   };
 
-  const handleSaveProfile = () => {
-    console.log("Profile Data:", profileData);
+  const handleSaveProfile = async () => {
+    try {
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/profile`, profileData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      // Refresh profile status in AuthContext
+      await refreshProfileStatus();
+
+      alert("Profile Updated Successfully!");
+      navigate("/ClientDashboard");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to update profile");
+    }
   };
 
   return (
@@ -63,16 +84,16 @@ function ClientProfile() {
           />
         </div>
 
-        {/* EmailID */}
+        {/* Contact Person */}
         <div className="mb-6">
-          <label className="block text-lg text-gray-700 font-medium mb-2">Email ID</label>
+          <label className="block text-lg text-gray-700 font-medium mb-2">Contact Person</label>
           <input
             type="text"
-            name="email"
-            value={profileData.emailID}
+            name="contactPerson"
+            value={profileData.contactPerson}
             onChange={handleInputChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your Email ID"
+            placeholder="Enter contact person name"
           />
         </div>
 
@@ -142,40 +163,58 @@ function ClientProfile() {
           </div>
         </div>
 
-        {/* OTP */}
-        <div className="flex w-1/4 space-x-4 mb-5">
+        {/* Website */}
+        <div className="mb-6">
+          <label className="block text-lg text-gray-700 font-medium mb-2">Website (Optional)</label>
           <input
-            type="text"
-            name="otp"
-            value={profileData.otp}
+            type="url"
+            name="website"
+            value={profileData.website}
             onChange={handleInputChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter OTP"
+            placeholder="https://yourcompany.com"
           />
         </div>
 
+        {/* Industry */}
         <div className="mb-6">
-              <label className="block text-lg font-medium text-gray-700 mb-2">
-                Date of Birth
-              </label>
-              <input
-                type="date"
-                id="dob"
-                name="dob"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+          <label className="block text-lg text-gray-700 font-medium mb-2">Industry</label>
+          <select
+            name="industry"
+            value={profileData.industry}
+            onChange={handleInputChange}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="Technology">Technology</option>
+            <option value="Finance">Finance</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Education">Education</option>
+            <option value="Retail">Retail</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        {/* Description */}
+        <div className="mb-6">
+          <label className="block text-lg text-gray-700 font-medium mb-2">Company Description</label>
+          <textarea
+            name="description"
+            value={profileData.description}
+            onChange={handleInputChange}
+            rows="4"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="Tell us about your company..."
+          />
+        </div>
 
         {/* Save Button */}
         <div className="text-right mt-4">
-          <Link to="/ClientDashboard">
           <button
             onClick={handleSaveProfile}
             className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-300 focus:ring-2 focus:ring-orange-500"
           >
             Save Profile
           </button>
-          </Link>
         </div>
       </section>
     </div>

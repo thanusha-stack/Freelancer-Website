@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { AuthContext } from "../../context/AuthContext";
 
 function ClientProfileCreate() {
+  const { token, refreshProfileStatus } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     companyName: '',
     contactPerson: '',
-    email: '',
     phone: '',
     website: '',
     industry: 'Technology',
@@ -20,6 +23,25 @@ function ClientProfileCreate() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/profile`, profileData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      // Refresh profile status in AuthContext
+      await refreshProfileStatus();
+
+      alert("Profile Updated Successfully!");
+      navigate("/ClientDashboard");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to update profile");
+    }
   };
 
   return (
@@ -53,18 +75,6 @@ function ClientProfileCreate() {
           />
         </div>
 
-        {/* Email */}
-        <div className="mb-6">
-          <label className="block text-lg text-gray-700 font-medium mb-2">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={profileData.email}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your email"
-          />
-        </div>
 
         {/* Phone Number */}
         <div className="mb-6">
@@ -154,11 +164,12 @@ function ClientProfileCreate() {
 
         {/* Save Button */}
         <div className="text-right mt-4">
-          <Link to="/ClientDashboard">
-            <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-300 focus:ring-2 focus:ring-orange-500">
-              Save Profile
-            </button>
-          </Link>
+          <button
+            onClick={handleSubmit}
+            className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-300 focus:ring-2 focus:ring-orange-500"
+          >
+            Save Profile
+          </button>
         </div>
       </section>
     </div>

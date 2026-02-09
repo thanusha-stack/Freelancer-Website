@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate,Link } from 'react-router-dom'; // Import useNavigate
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import FLNotifyBell from '../Subheader/Notification/NotifyBell/NotifyBell';
+import { AuthContext } from "../../../context/AuthContext";
 
 function FLSubHeader() {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
+
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
   };
@@ -25,20 +28,20 @@ function FLSubHeader() {
 
   // Function to navigate to the dashboard
   const handleNavigateToDashboard = () => {
-    navigate('/FLDashboard'); // Adjust the route as necessary
-    setShowMenu(false); // Close the menu after navigation
+    navigate('/FLDashboard');
+    setShowMenu(false);
   };
 
   const handleNavigateToProjects = () => {
-    navigate('/ViewProjects'); // Adjust the route as necessary
-    setShowMenu(false); // Close the menu after navigation
+    navigate('/ViewProjects');
+    setShowMenu(false);
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setToken(null);
-  };
-  
+  const handleLogout = () => {
+    logout();
+    navigate("/"); // Redirect to home/landing
+  }
+
   return (
     <>
       <div className="bg-black shadow-md shadow-gray-500">
@@ -87,22 +90,22 @@ function FLSubHeader() {
               ref={menuRef}
               className="absolute z-10 mt-2 w-48 bg-white shadow-lg rounded-lg py-2"
             >
-              <button 
+              <button
                 className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                 onClick={handleNavigateToDashboard} // Use onClick here
               >
                 Dashboard
               </button>
               <button className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-              onClick={handleNavigateToProjects}
+                onClick={handleNavigateToProjects}
               >
                 View Projects
               </button>
-              <Link to={logout}>
-              <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+
+              <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100">
                 Log Out
               </button>
-              </Link>
+
             </div>
           )}
         </div>

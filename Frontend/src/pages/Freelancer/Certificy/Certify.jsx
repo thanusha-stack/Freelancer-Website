@@ -1,13 +1,17 @@
-import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { AuthContext } from "../../../context/AuthContext";
 
 function Certify() {
+  const { token, refreshProfileStatus } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     name: '',
     description: '',
-    skill: 'Web Development',
-    experience: 'Beginner',
-    language: 'Beginner',
+    skill: 'Web Development', // We might want to map this to 'skills' array in backend
+    experience: 'Beginner', // Mapped to experienceLevel
+    language: 'Beginner', // Mapped to language level? Or Just language? UI says "Language (English)" -> "Beginner" etc.
     rate: '',
     location: '',
     country: 'United States',
@@ -40,6 +44,42 @@ function Certify() {
 
   const triggerFileSelect = () => {
     fileInputRef.current.click();
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("name", profileData.name);
+      formData.append("description", profileData.description);
+      formData.append("skills", profileData.skill); // Backend expects array, but multer handles strings ok, or we can JSON.stringify if complex
+      formData.append("experienceLevel", profileData.experience);
+      formData.append("language", profileData.language);
+      formData.append("hourlyRate", profileData.rate);
+      formData.append("location", profileData.location);
+      formData.append("country", profileData.country);
+      formData.append("phone", profileData.phone);
+      formData.append("dob", profileData.dob);
+
+      if (fileInputRef.current.files[0]) {
+        formData.append("resume", fileInputRef.current.files[0]);
+      }
+
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/profile`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        }
+      });
+
+      // Refresh profile status in AuthContext
+      await refreshProfileStatus();
+
+      alert("Profile Updated Successfully!");
+      navigate("/FLDashboard");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to update profile");
+    }
   };
 
   return (
@@ -207,11 +247,12 @@ function Certify() {
 
         {/* Save Button */}
         <div className="text-right mt-4">
-          <Link to="/FLDashboard">
-            <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-300 focus:ring-2 focus:ring-orange-500">
-              Save Profile
-            </button>
-          </Link>
+          <button
+            onClick={handleSubmit}
+            className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-300 focus:ring-2 focus:ring-orange-500"
+          >
+            Save Profile
+          </button>
         </div>
       </section>
     </div>

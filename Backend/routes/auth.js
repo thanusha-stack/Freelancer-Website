@@ -1,0 +1,118 @@
+const express = require("express");
+const router = express.Router();
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+const User = require("../models/User");
+
+const SECRET = process.env.JWT_SECRET || "SECRET_KEY";
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+// ================= REGISTER =================
+router.post("/register", async (req, res) => {
+    try {
+        const { name, email, password, role } = req.body;
+
+        if (!name || !email || !password)
+            return res.status(400).json({ message: "All fields required" });
+
+        const existing = await User.findOne({ email });
+        if (existing)
+            return res.status(400).json({ message: "Already registered" });
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // allow only client or freelancer
+        const allowedRoles = ["client", "freelancer"];
+        const userRole = allowedRoles.includes(role) ? role : "client";
+
+        await User.create({
+            name,
+            email,
+            password: hashedPassword,
+            role: userRole,
+        });
+
+        res.json({ message: "User registered successfully" });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// ================= LOGIN =================
+router.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+        if (!user)
+            return res.status(404).json({ message: "Email not found" });
+
+        if (!user.password)
+            return res.status(400).json({ message: "Use Google Login" });
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch)
+            return res.status(401).json({ message: "Invalid password" });
+
+        const token = jwt.sign(
+            { id: user._id, role: user.role },
+            SECRET,
+            { expiresIn: "7d" } // Token expires in 7 days
+        );
+
+        res.json({
+            token,
+            role: user.role,
+            isProfileComplete: user.isProfileComplete,
+        });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// ================= GOOGLE LOGIN =================
+router.post("/google-login", async (req, res) => {
+    try {
+        const { token, role } = req.body;
+
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+
+        const payload = ticket.getPayload();
+        const { email, name, sub } = payload;
+
+        let user = await User.findOne({ email });
+
+        if (!user) {
+            const allowedRoles = ["client", "freelancer"];
+            const userRole = allowedRoles.includes(role) ? role : "client";
+
+            user = await User.create({
+                name,
+                email,
+                googleId: sub,
+                role: userRole,
+            });
+        }
+
+        const jwtToken = jwt.sign(
+            { id: user._id, role: user.role },
+            SECRET,
+            { expiresIn: "7d" } // Token expires in 7 days
+        );
+
+        res.json({
+            token: jwtToken,
+            role: user.role,
+            isProfileComplete: user.isProfileComplete, // Fixed Typo from ProfileComplete
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(401).json({ message: "Google login failed" });
+    }
+});
+
+module.exports = router;

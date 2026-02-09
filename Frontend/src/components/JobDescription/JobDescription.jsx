@@ -1,59 +1,281 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import bg from "../../assets/images/bg.jpg";
 import Programmer from "../../assets/images/Programmer.svg";
-
-const jobData = {
-  title: "Frontend Developer",
-  company: "Tech Solutions Inc.",
-  location: "Remote",
-  description: "We are looking for a talented Frontend Developer to join our team. You will work on exciting projects, building responsive and interactive user interfaces.",
-  requirements: [
-    "Proficiency in HTML, CSS, and JavaScript.",
-    "Experience with React.js or similar frameworks.",
-    "Familiarity with version control systems (e.g., Git).",
-    "Strong problem-solving skills.",
-    "Excellent communication and teamwork skills.",
-  ],
-  salary: "$70,000 - $90,000",
-};
+import { AuthContext } from "../../context/AuthContext";
 
 function JobDescription() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { token, role } = useContext(AuthContext);
+
+  const [job, setJob] = useState(location.state?.job || null);
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [applicationData, setApplicationData] = useState({
+    coverLetter: '',
+    proposedRate: '',
+    estimatedDuration: '',
+    dateOfBirth: '',
+  });
+  const [errors, setErrors] = useState({});
+
+  // If no job in state, redirect back
+  useEffect(() => {
+    if (!job) {
+      alert("No job selected. Redirecting...");
+      navigate("/JobsListPage");
+    }
+  }, [job, navigate]);
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!applicationData.coverLetter.trim()) {
+      newErrors.coverLetter = "Cover letter is required";
+    } else if (applicationData.coverLetter.trim().length < 50) {
+      newErrors.coverLetter = "Cover letter must be at least 50 characters";
+    }
+
+    if (!applicationData.proposedRate) {
+      newErrors.proposedRate = "Proposed rate is required";
+    } else if (Number(applicationData.proposedRate) <= 0) {
+      newErrors.proposedRate = "Rate must be greater than 0";
+    }
+
+    if (!applicationData.estimatedDuration.trim()) {
+      newErrors.estimatedDuration = "Estimated duration is required";
+    }
+
+    if (!applicationData.dateOfBirth) {
+      newErrors.dateOfBirth = "Date of birth is required";
+    } else {
+      // Age verification
+      const dob = new Date(applicationData.dateOfBirth);
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      const monthDiff = today.getMonth() - dob.getMonth();
+
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        age--;
+      }
+
+      if (age < 18) {
+        newErrors.dateOfBirth = "You must be at least 18 years old to apply";
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setApplicationData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    // Clear error for this field
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleApplyNow = () => {
+    if (!token) {
+      alert("Please login to apply for this job");
+      navigate("/Login");
+      return;
+    }
+
+    if (role !== "freelancer") {
+      alert("Only freelancers can apply for jobs");
+      return;
+    }
+
+    setShowApplicationForm(true);
+  };
+
+  const handleSubmitApplication = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/applications`,
+        {
+          projectId: job._id,
+          ...applicationData
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      alert("Application submitted successfully!");
+      setShowApplicationForm(false);
+      navigate("/FLDashboard");
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to submit application");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!job) {
+    return null;
+  }
+
   return (
-    <section 
-      className="h-screen flex items-center justify-center bg-cover bg-center" 
-      style={{ backgroundImage: `url(${bg})` }} // Update the path to your background image
+    <section
+      className="min-h-screen flex items-center justify-center bg-cover bg-center py-10"
+      style={{ backgroundImage: `url(${bg})` }}
     >
-      <div className="max-w-4xl mx-auto bg-white p-5 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-4">{jobData.title}</h1>
+      <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-4">{job.name}</h1>
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h2 className="text-xl font-semibold">{jobData.company}</h2>
-            <p className="text-gray-600">{jobData.location}</p>
+            <h2 className="text-xl font-semibold">{job.clientId?.companyName || job.clientId?.name || "Company"}</h2>
+            <p className="text-gray-600">{job.task}</p>
           </div>
-          <div className="bg-blue-500 text-white rounded-full px-4 py-2">
-            <span>{jobData.salary}</span>
+          {job.budget && (
+            <div className="bg-blue-500 text-white rounded-full px-4 py-2">
+              <span>${job.budget}</span>
+            </div>
+          )}
+        </div>
+
+        <div className="mb-6">
+          <h3 className="text-xl font-semibold mb-2">Job Description</h3>
+          <p className="text-gray-700 whitespace-pre-wrap">{job.description || "No description provided"}</p>
+        </div>
+
+        {job.deadline && (
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold mb-2">Deadline</h3>
+            <p className="text-gray-700">{new Date(job.deadline).toLocaleDateString()}</p>
+          </div>
+        )}
+
+        <div className='flex gap-10 mb-6'>
+          <div className="flex-1">
+            <h3 className="text-xl font-semibold mb-2">Project Details</h3>
+            <ul className="list-disc ml-5 text-gray-600">
+              <li>Task: {job.task}</li>
+              <li>Status: {job.status}</li>
+              {job.budget && <li>Budget: ${job.budget}</li>}
+            </ul>
+          </div>
+          <div>
+            <img src={Programmer} alt="Programmer" className="w-48" />
           </div>
         </div>
-        <div className="mb-6">
-          <h3 className="text-xl font-semibold">Job Description</h3>
-          <p>{jobData.description}</p>
-        </div>
-        <div className='flex gap-10'>
-        <div className="mb-6">
-          <h3 className="text-xl font-semibold">Requirements</h3>
-          <ul className="list-disc ml-5">
-            {jobData.requirements.map((req, index) => (
-              <li key={index} className="text-gray-600">{req}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <img src={ Programmer } />
-        </div>
-        </div>
-        <button className="bg-orange-500 text-white rounded-lg px-5 py-2 hover:bg-orange-700 transition-all">
-          Apply Now
-        </button>
+
+        {!showApplicationForm ? (
+          <button
+            onClick={handleApplyNow}
+            className="bg-orange-500 text-white rounded-lg px-6 py-3 hover:bg-orange-700 transition-all font-semibold"
+          >
+            Apply Now
+          </button>
+        ) : (
+          <div className="mt-8 border-t pt-6">
+            <h3 className="text-2xl font-bold mb-4">Submit Your Application</h3>
+            <form onSubmit={handleSubmitApplication} className="space-y-4">
+              {/* Cover Letter */}
+              <div>
+                <label className="block text-lg font-medium mb-2">
+                  Cover Letter <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  name="coverLetter"
+                  value={applicationData.coverLetter}
+                  onChange={handleInputChange}
+                  rows="6"
+                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.coverLetter ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="Tell the client why you're the best fit for this project..."
+                  required
+                />
+                {errors.coverLetter && <p className="text-red-500 text-sm mt-1">{errors.coverLetter}</p>}
+              </div>
+
+              {/* Proposed Rate */}
+              <div>
+                <label className="block text-lg font-medium mb-2">
+                  Proposed Rate (USD) <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="number"
+                  name="proposedRate"
+                  value={applicationData.proposedRate}
+                  onChange={handleInputChange}
+                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.proposedRate ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="Enter your proposed rate"
+                  min="1"
+                  required
+                />
+                {errors.proposedRate && <p className="text-red-500 text-sm mt-1">{errors.proposedRate}</p>}
+              </div>
+
+              {/* Estimated Duration */}
+              <div>
+                <label className="block text-lg font-medium mb-2">
+                  Estimated Duration <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="estimatedDuration"
+                  value={applicationData.estimatedDuration}
+                  onChange={handleInputChange}
+                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.estimatedDuration ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="e.g., 2 weeks, 1 month"
+                  required
+                />
+                {errors.estimatedDuration && <p className="text-red-500 text-sm mt-1">{errors.estimatedDuration}</p>}
+              </div>
+
+              {/* Date of Birth (Age Verification) */}
+              <div>
+                <label className="block text-lg font-medium mb-2">
+                  Date of Birth <span className="text-red-500">*</span> <span className="text-sm text-gray-500">(Must be 18+)</span>
+                </label>
+                <input
+                  type="date"
+                  name="dateOfBirth"
+                  value={applicationData.dateOfBirth}
+                  onChange={handleInputChange}
+                  className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 ${errors.dateOfBirth ? 'border-red-500' : 'border-gray-300'}`}
+                  max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
+                  required
+                />
+                {errors.dateOfBirth && <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth}</p>}
+              </div>
+
+              <div className="flex gap-4">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="bg-orange-500 text-white rounded-lg px-6 py-3 hover:bg-orange-700 transition-all font-semibold disabled:bg-gray-400"
+                >
+                  {loading ? "Submitting..." : "Submit Application"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowApplicationForm(false)}
+                  className="bg-gray-300 text-gray-700 rounded-lg px-6 py-3 hover:bg-gray-400 transition-all font-semibold"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate,Link } from 'react-router-dom'; // Import useNavigate
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import CLNotifyBell from '../NotifyBell/NotifyBell';
+import { AuthContext } from "../../../context/AuthContext";
 
 function SubHeader() {
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
 
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -26,14 +28,20 @@ function SubHeader() {
 
   // Function to navigate to the dashboard
   const handleNavigateToDashboard = () => {
-    navigate('/ClientDashboard'); // Adjust the route as necessary
-    setShowMenu(false); // Close the menu after navigation
+    navigate('/ClientDashboard');
+    setShowMenu(false);
   };
 
   const handleNavigateToProjects = () => {
-    navigate('/ClientViewProjects'); // Adjust the route as necessary
-    setShowMenu(false); // Close the menu after navigation
+    navigate('/ClientViewProjects');
+    setShowMenu(false);
   };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  }
+
   return (
     <>
       <div className="bg-black shadow-md shadow-gray-500">
@@ -82,22 +90,20 @@ function SubHeader() {
               ref={menuRef}
               className="absolute z-10 mt-2 w-48 bg-white shadow-lg rounded-lg py-2"
             >
-              <button 
+              <button
                 className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                 onClick={handleNavigateToDashboard} // Use onClick here
               >
                 Dashboard
               </button>
               <button className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-              onClick={handleNavigateToProjects}
+                onClick={handleNavigateToProjects}
               >
                 View Projects
               </button>
-              <Link to="/">
-              <button className="block w-full text-left px-4 py-2 hover:bg-gray-100">
+              <button onClick={handleLogout} className="block w-full text-left px-4 py-2 hover:bg-gray-100">
                 Log Out
               </button>
-              </Link>
             </div>
           )}
         </div>

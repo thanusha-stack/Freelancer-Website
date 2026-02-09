@@ -39,47 +39,6 @@ function App() {
   return (
     <>
       <Navbar />
-<<<<<<< HEAD
-    <div className="mt-16 bg-gray-100">
-      <Routes>
-        <Route path="/" element={<MainDashboard/>} /> 
-        <Route path="/GetInfo" element={<GetInfo />} />
-        <Route path="/Certify" element={<Certify />} /> 
-        <Route path="/profileProvider" element={<ProfileProvider />}/>
-        <Route path="/clientProfileCreate" element={<ClientProfileCreate />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/FLDashboard" element={<FLDashboard /> } /> 
-        <Route path="/FLHome" element={<FLHome />} />
-        <Route path="/PostProject" element={<PostProject />} />
-        <Route path="/ClientProfile" element={<ClientProfile />} />
-        <Route path="/ClientHome" element={<ClientHome />}></Route>
-        <Route path="/ClientDashboard" element={<ClientDashboard />} />
-        <Route path="/Messaging" element={<Messaging />} />
-        <Route path="/AboutUS" element={<AboutUs/>} />
-        <Route path="/MessageToggle" element={<MessageToggle />} />
-        <Route path="/Support" element={<Support />} />
-        <Route path="/LiveChat" element={ <LiveChat /> } />
-        <Route path="/Login" element={<Login /> } />
-        <Route path="/SignUp" element={<Signup />} />
-        <Route path="/FreelancerPage" element={<FreelancerPage />} />
-        <Route path="/ViewProjects" element={ <ViewProjects /> } />
-        <Route path="/FLViewProfile" element={<FLViewProfile />} />
-        <Route path="/ClientViewProjects" element={ <ClientViewProjects />} />
-        <Route path="/JobDescription" element={<JobDescription />} />
-        <Route path="/SubHeader" element={<SubHeader />}/>
-        <Route path="/CLNotifyBell" element={<CLNotifyBell/>} />
-        <Route path="/ClientNotification" element={<ClientNotification/>} />
-        <Route path="/FLNotification" element={<FLNotification/>} />
-        <Route path="/FLSubheader" element={<FLSubHeader/>} />
-        <Route path="/JobsDash" element={<JobsDash />}/>
-        <Route path="/JobsListPage" element={<JobsListPage />} /> 
-        <Route path="/JobsCard" element={<JobsCard/>}/>
-        <Route path="/footer" element={<Footer />} />
-      </Routes>
-    </div>
-    </Router>
-=======
-
       <div className="mt-16 bg-gray-100">
         <Routes>
           <Route path="/" element={<MainDashboard />} />
@@ -100,7 +59,7 @@ function App() {
           <Route path="/Support" element={<Support />} />
           <Route path="/LiveChat" element={<LiveChat />} />
           <Route path="/Login" element={<Login />} />
-          <Route path="/SignUp" element={<Signup />} />
+          <Route path="/SignUp" element={<Login />} /> {/* Redirecting SignUp to Login as Login handles both */}
 
           <Route path="/FreelancerPage" element={
             <ProtectedRoutes>
@@ -133,7 +92,6 @@ function App() {
         </Routes>
       </div>
     </>
->>>>>>> f534e5395664b52478869101409bdbffd8ff082d
   );
 }
 
