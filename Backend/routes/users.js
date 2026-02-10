@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const authMiddleware = require("../middleware/auth");
-const sanitize = require("../utils/sanitize");
+const sanitize = require("../utils/sanitize");
+
+// GET /api/users - Get users (with optional role filter)
+// Public endpoint for displaying freelancers on client dashboard
 router.get("/", async (req, res) => {
     try {
         const { role } = req.query;
@@ -20,7 +23,9 @@ router.get("/", async (req, res) => {
         console.error("Error in GET /api/users:", err);
         res.status(500).json({ message: err.message });
     }
-});
+});
+
+// GET /api/users/me - Get current user profile
 router.get("/me", authMiddleware, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select("-password");
@@ -28,7 +33,9 @@ router.get("/me", authMiddleware, async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-});
+});
+
+// PUT /api/users/profile - Update user profile
 const upload = require("../middleware/upload");
 
 router.put("/profile", authMiddleware, upload.single("resume"), async (req, res) => {
@@ -36,13 +43,19 @@ router.put("/profile", authMiddleware, upload.single("resume"), async (req, res)
         const updates = {};
         for (const key in req.body) {
             updates[key] = sanitize(req.body[key]);
-        }
+        }
+
+        // Handle file upload
         if (req.file) {
-            updates.resume = req.file.path; 
-        }
+            updates.resume = req.file.path; // Save file path to user.resume
+        }
+
+        // Prevent updating sensitive fields via this route
         delete updates.password;
         delete updates.googleId;
-        delete updates.email;
+        delete updates.email;
+
+        // Also set isProfileComplete to true
         updates.isProfileComplete = true;
 
         const user = await User.findByIdAndUpdate(

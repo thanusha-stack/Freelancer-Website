@@ -10,47 +10,65 @@ function Login() {
   const { login, logout, token } = useContext(AuthContext);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const roleFromURL = searchParams.get("role"); 
+  const roleFromURL = searchParams.get("role"); // "client" | "freelancer"
 
   const [isLogin, setIsLogin] = useState(true);
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
-    role: roleFromURL || "freelancer" 
-  });
+    role: roleFromURL || "freelancer" // Default to freelancer if not specified
+  });
+
+  // Update form role when URL changes
   useEffect(() => {
     if (roleFromURL) {
       setForm(prev => ({ ...prev, role: roleFromURL }));
     }
-  }, [roleFromURL]);
+  }, [roleFromURL]);
+
+  // Redirect if already logged in
   useEffect(() => {
     if (token) {
       const storedRole = localStorage.getItem("role");
       if (storedRole === "freelancer") navigate("/FLDashboard", { replace: true });
       else if (storedRole === "client") navigate("/ClientDashboard", { replace: true });
     }
-  }, [token, navigate]);
+  }, [token, navigate]);
+
+
+  // Register function
   const register = async () => {
-    try {
+    try {
+      // Ensure role is set
       const payload = { ...form };
       if (!payload.role) payload.role = "freelancer";
 
       const res = await axios.post(`${API}/register`, payload);
-      alert(res.data.message || "Registered Successfully");
+      alert(res.data.message || "Registered Successfully");
+
+      // Auto login after register? Or just switch to login
       setIsLogin(true);
     } catch (err) {
       alert(err.response?.data?.message || "Registration failed");
     }
-  };
+  };
+
+  // Login function
   const handleLogin = async () => {
     try {
       const res = await axios.post(`${API}/login`, {
         email: form.email,
         password: form.password
-      });
+      });
 
-      login(res.data.token, res.data.role, res.data.isProfileComplete);
+      // Role mismatch protection (optional, depends on requirement)
+      // If user logs in as Client but came from Freelancer link, maybe warn?
+      // For now, let's just log them in as whatever they are.
+
+      login(res.data.token, res.data.role, res.data.isProfileComplete);
+
+      // Check if user has completed profile
       if (res.data.isProfileComplete) {
         if (res.data.role === "freelancer") navigate("/FLDashboard", { replace: true });
         else if (res.data.role === "client") navigate("/ClientDashboard", { replace: true });
@@ -61,7 +79,9 @@ function Login() {
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
-  };
+  };
+
+  // Google login
   const googleLogin = async (credentialResponse) => {
     try {
       const res = await axios.post(`${API}/google-login`, {
@@ -69,7 +89,9 @@ function Login() {
         role: roleFromURL || "freelancer"
       });
 
-      login(res.data.token, res.data.role, res.data.isProfileComplete);
+      login(res.data.token, res.data.role, res.data.isProfileComplete);
+
+      // Navigate depending on profile completion
       if (res.data.isProfileComplete) {
         if (res.data.role === "freelancer") navigate("/FLDashboard", { replace: true });
         else if (res.data.role === "client") navigate("/ClientDashboard", { replace: true });
@@ -115,7 +137,7 @@ function Login() {
           className="w-full p-2 mb-4 rounded bg-gray-200 focus:outline-none"
         />
 
-        {}
+        {/* Role Selection for Registration if not in URL */}
         {!isLogin && !roleFromURL && (
           <div className="mb-4 text-left">
             <label className="mr-4">
@@ -136,6 +158,7 @@ function Login() {
             </label>
           </div>
         )}
+
 
         <button
           onClick={isLogin ? handleLogin : register}

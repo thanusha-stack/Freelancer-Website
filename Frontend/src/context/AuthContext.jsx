@@ -7,19 +7,24 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [isProfileComplete, setIsProfileComplete] = useState(localStorage.getItem("isProfileComplete") === "true");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  // Sync profile status from server on mount
   useEffect(() => {
     const syncProfileStatus = async () => {
       const storedToken = localStorage.getItem("token");
 
       if (storedToken) {
-        try {
+        try {
+          // Fetch latest user data from server
           const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/me`, {
             headers: { Authorization: `Bearer ${storedToken}` }
           });
 
           const serverProfileStatus = response.data.isProfileComplete;
-          const serverRole = response.data.role;
+          const serverRole = response.data.role;
+
+          // Update localStorage and state with server values
           localStorage.setItem("isProfileComplete", serverProfileStatus);
           localStorage.setItem("role", serverRole);
 
@@ -27,7 +32,8 @@ export const AuthProvider = ({ children }) => {
           setRole(serverRole);
           setIsProfileComplete(serverProfileStatus);
         } catch (error) {
-          console.error("Failed to sync profile status:", error);
+          console.error("Failed to sync profile status:", error);
+          // If token is invalid, clear everything
           if (error.response?.status === 401) {
             localStorage.removeItem("token");
             localStorage.removeItem("role");
@@ -35,7 +41,8 @@ export const AuthProvider = ({ children }) => {
             setToken(null);
             setRole(null);
             setIsProfileComplete(false);
-          } else {
+          } else {
+            // Fallback to localStorage values if network error
             const storedRole = localStorage.getItem("role");
             const storedProfileStatus = localStorage.getItem("isProfileComplete");
             setToken(storedToken);
@@ -69,7 +76,9 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setRole(null);
     setIsProfileComplete(false);
-  };
+  };
+
+  // Function to refresh profile status (call after profile update)
   const refreshProfileStatus = async () => {
     if (token) {
       try {
