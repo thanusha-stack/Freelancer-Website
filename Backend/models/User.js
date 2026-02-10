@@ -13,29 +13,22 @@ const userSchema = new mongoose.Schema({
     isProfileComplete: {
         type: Boolean,
         default: false,
-    },
-    // Generic Profile Fields
+    },
     phone: { type: String, default: "" },
     location: { type: String, default: "" },
     country: { type: String, default: "" },
-    description: { type: String, default: "" }, // Overview/Bio
-    profilePhoto: { type: String, default: "" }, // Profile photo URL
-
-    // Client Specific
+    description: { type: String, default: "" }, 
+    profilePhoto: { type: String, default: "" }, 
     companyName: { type: String, default: "" },
     contactPerson: { type: String, default: "" },
     website: { type: String, default: "" },
-    industry: { type: String, default: "" },
-
-    // Freelancer Specific
-    experienceLevel: { type: String, default: "" }, // Beginner, Intermediate, Pro
+    industry: { type: String, default: "" },
+    experienceLevel: { type: String, default: "" }, 
     language: { type: String, default: "English" },
     dob: { type: Date },
-    resume: { type: String, default: "" }, // Filename or URL
-
-    // Existing fields
+    resume: { type: String, default: "" }, 
     skills: { type: [String], default: [] },
-    bio: { type: String, default: "" }, // Keeping backward compatibility if used
+    bio: { type: String, default: "" }, 
     hourlyRate: { type: Number, default: 0 },
     experience: [
         {

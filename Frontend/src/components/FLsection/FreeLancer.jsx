@@ -20,7 +20,7 @@ const FreelancerSection = () => {
           name: user.name,
           role: user.bio || "Freelancer",
           hourlyRate: user.hourlyRate || 0,
-          jobSuccess: 95, // Placeholder as it's not in DB yet
+          jobSuccess: 95, 
           tags: user.skills || [],
           image: user.profilePhoto || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name) + '&size=200&background=random',
         }));
@@ -60,7 +60,7 @@ const FreelancerSection = () => {
       </div>
       <div className="flex justify-center">
         <button
-          onClick={handleSubmit} // Corrected 'onClick'
+          onClick={handleSubmit} 
           className="px-6 py-3 bg-orange-500 text-white mt-4 rounded-lg hover:bg-orange-400"
         >
           View More Freelancers &gt;

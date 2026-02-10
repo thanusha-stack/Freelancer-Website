@@ -21,7 +21,7 @@ const useFetch = (url, options = {}) => {
                 };
 
                 if (token) {
-                    headers["Authorization"] = `Bearer ${token}`; // Ensure Bearer scheme
+                    headers["Authorization"] = `Bearer ${token}`; 
                 }
 
                 const res = await axios.get(`${API_BASE}${url}`, {
@@ -40,11 +40,9 @@ const useFetch = (url, options = {}) => {
         if (url) {
             fetchData();
         }
-    }, [url, token]); // Re-run if URL or token changes
+    }, [url, token]); 
 
-    const refetch = () => {
-        // Logic to re-trigger useEffect or separate function
-        // For simplicity in this version, we can just rely on key changes or expose a manual fetch
+    const refetch = () => {
     };
 
     return { data, loading, error };

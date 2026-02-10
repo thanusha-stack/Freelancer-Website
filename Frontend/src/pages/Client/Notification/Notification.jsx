@@ -9,7 +9,7 @@ function ClientNotification() {
             <p className="text-2xl font-semibold text-gray-700 mb-4">Notifications</p>
   
             <div className="space-y-4">
-              {/* Example Notification 1 */}
+              {}
               <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
                 <div className="flex-shrink-0 p-2 bg-blue-100 rounded-full">
                   <svg
@@ -34,7 +34,7 @@ function ClientNotification() {
                 </div>
               </div>
   
-              {/* Example Notification 2 */}
+              {}
               <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
                 <div className="flex-shrink-0 p-2 bg-green-100 rounded-full">
                   <svg
@@ -59,7 +59,7 @@ function ClientNotification() {
                 </div>
               </div>
   
-              {/* Example Notification 3 */}
+              {}
               <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
                 <div className="flex-shrink-0 p-2 bg-red-100 rounded-full">
                   <svg
@@ -83,9 +83,8 @@ function ClientNotification() {
                   <p className="text-xs text-gray-400 mt-1">3 hours ago</p>
                 </div>
               </div>
-           
-  
-              {/* Example Notification 1 */}
+
+              {}
               <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
                 <div className="flex-shrink-0 p-2 bg-yellow-100 rounded-full">
                   <svg
@@ -110,7 +109,7 @@ function ClientNotification() {
                 </div>
               </div>
   
-              {/* Example Notification 2 */}
+              {}
               <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
                 <div className="flex-shrink-0 p-2 bg-purple-100 rounded-full">
                   <svg
@@ -135,7 +134,7 @@ function ClientNotification() {
                 </div>
               </div>
   
-              {/* Example Notification 3 */}
+              {}
               <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
                 <div className="flex-shrink-0 p-2 bg-teal-100 rounded-full">
                   <svg

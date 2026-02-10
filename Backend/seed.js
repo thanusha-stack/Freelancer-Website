@@ -4,9 +4,7 @@ const bcrypt = require("bcryptjs");
 const User = require("./models/User");
 const Project = require("./models/Project");
 
-const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/freelancer";
-
-// Sample data
+const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/freelancer";
 const clients = [
     {
         name: "Sarah Johnson",
@@ -413,18 +411,13 @@ const projectsData = [
 ];
 
 async function seedDatabase() {
-    try {
-        // Connect to MongoDB
+    try {
         await mongoose.connect(MONGO_URI);
-        console.log("✅ Connected to MongoDB");
-
-        // Clear existing data
+        console.log("✅ Connected to MongoDB");
         console.log("\n🗑️  Clearing existing data...");
         await User.deleteMany({});
         await Project.deleteMany({});
-        console.log("✅ Existing data cleared");
-
-        // Create clients
+        console.log("✅ Existing data cleared");
         console.log("\n👥 Creating clients...");
         const createdClients = [];
         for (const client of clients) {
@@ -435,9 +428,7 @@ async function seedDatabase() {
             });
             createdClients.push(newClient);
             console.log(`   ✓ Created client: ${client.name} (${client.email})`);
-        }
-
-        // Create freelancers
+        }
         console.log("\n💼 Creating freelancers...");
         for (const freelancer of freelancers) {
             const hashedPassword = await bcrypt.hash(freelancer.password, 10);
@@ -446,9 +437,7 @@ async function seedDatabase() {
                 password: hashedPassword
             });
             console.log(`   ✓ Created freelancer: ${freelancer.name} (${freelancer.email})`);
-        }
-
-        // Create projects
+        }
         console.log("\n📋 Creating projects...");
         for (const projectData of projectsData) {
             const client = createdClients.find(c => c.email === projectData.clientEmail);

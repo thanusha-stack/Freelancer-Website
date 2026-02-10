@@ -28,7 +28,7 @@ const jobList = [
 function JobsCard({ name, budget, task, description, _id }) {
   return (
     <div className="flex flex-col justify-between p-4 bg-white border border-gray-300 rounded-lg shadow-md h-full">
-      {/* Job Header */}
+      {}
       <div className="flex items-center mb-3">
         <div>
           <p className="text-lg font-semibold">{name}</p>
@@ -40,7 +40,7 @@ function JobsCard({ name, budget, task, description, _id }) {
         />
       </div>
 
-      {/* Price & Tags */}
+      {}
       <div className="text-sm text-gray-700 mb-3">
         <span className="font-bold">{budget ? `$${budget}` : "Negotiable"}</span>
       </div>
@@ -51,7 +51,7 @@ function JobsCard({ name, budget, task, description, _id }) {
         </span>
       </div>
 
-      {/* View Profile Button */}
+      {}
       <Link to="/JobDescription" state={{ job: { name, budget, task, description, _id } }}>
         <button className="mt-4 border border-orange-500 text-orange-500 font-semibold px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white w-full">
           View Project

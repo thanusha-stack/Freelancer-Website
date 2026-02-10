@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const projectSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
-    task: { type: String, required: true }, // e.g., Wireframing, Design, Development
+    task: { type: String, required: true }, 
     status: {
         type: String,
         enum: ["Pending", "In Progress", "Done"],
         default: "Pending",
     },
-    action: { type: String, default: "Play" }, // UI state like Play/Pause
+    action: { type: String, default: "Play" }, 
     clientId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     freelancerId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     budget: { type: String },

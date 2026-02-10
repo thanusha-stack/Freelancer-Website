@@ -5,15 +5,15 @@ const ProfileCard = () => {
   const { data: user, loading } = useFetch("/api/users/me");
 
   const profileData = user ? {
-    image: "https://via.placeholder.com/150", // Static for now
+    image: "https://via.placeholder.com/150", 
     name: user.name,
-    location: "Remote", // Schema doesn't have location yet
+    location: "Remote", 
     email: user.email,
     phone: "N/A",
     rating: 5,
     rate: user.hourlyRate ? `$${user.hourlyRate}/hr` : "Negotiable",
     summary: user.bio || "No summary provided.",
-    workHistory: user.experience?.[0] || {}, // Just showing first one for now matching UI structure
+    workHistory: user.experience?.[0] || {}, 
     education: user.education?.[0] || {},
     videoSrc: "https://www.w3schools.com/html/mov_bbb.mp4"
   } : null;
@@ -24,7 +24,7 @@ const ProfileCard = () => {
 
   return (
     <div className="mx-auto p-8 bg-white shadow-lg rounded-lg flex">
-      {/* Left Section - Static */}
+      {}
       <div className="w-1/3 pr-6 sticky top-8 h-screen">
         <img
           src={profileData.image}
@@ -61,7 +61,7 @@ const ProfileCard = () => {
         </button>
       </div>
 
-      {/* Right Section - Scrollable */}
+      {}
       <div className="w-2/3 pl-6 overflow-y-auto">
         <h3 className="text-2xl font-bold text-orange-500 mb-4">
           Professional Summary

@@ -9,7 +9,7 @@ function Navbar() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userRole, setUserRole] = useState(""); // New state for user role
+    const [userRole, setUserRole] = useState(""); 
     const drawerRef = useRef(null);
     const navigate = useNavigate();
   
@@ -18,17 +18,13 @@ function Navbar() {
     const goBack = () => {
         setIsDrawerOpen(false);
         navigate(-1);
-    };
-
-    // Simulate role check for demonstration (replace with real role check logic)
+    };
     useEffect(() => {
-        const loggedIn = localStorage.getItem("isLoggedIn"); // Example check for login status
-        const role = localStorage.getItem("userRole"); // Example check for user role (e.g., "freelancer" or "client")
+        const loggedIn = localStorage.getItem("isLoggedIn"); 
+        const role = localStorage.getItem("userRole"); 
         setIsLoggedIn(loggedIn === "true");
         setUserRole(role || ""); 
-    }, []);
-
-    // Close dropdown when clicking outside
+    }, []);
     useEffect(() => {
         const handleClickOutsideDropdown = (event) => {
             if (!event.target.closest('.dropdown')) {
@@ -39,9 +35,7 @@ function Navbar() {
         return () => {
             document.removeEventListener('mousedown', handleClickOutsideDropdown);
         };
-    }, []);
-  
-    // Close side drawer when clicking outside
+    }, []);
     useEffect(() => {
         const handleClickOutsideDrawer = (event) => {
             if (drawerRef.current && !drawerRef.current.contains(event.target)) {
@@ -62,7 +56,7 @@ function Navbar() {
 
     return (
         <div>
-            {/* Navbar */}
+            {}
             <nav className="fixed w-full px-3 justify-between items-center h-16 flex bg-white border border-gray top-0 z-10">
                 <div className="flex">
                     <img src={logo} alt="Logo" style={{ width: "130px" }} />
@@ -73,7 +67,7 @@ function Navbar() {
                         Dashboard
                     </Link>
                     
-                    {/* Conditional "Projects" Link based on role */}
+                    {}
                     <Link
                         to="/JobsListPage"
                         className="text-1xl font-semibold hover:text-orange-500 cursor-pointer duration-200"
@@ -104,7 +98,6 @@ function Navbar() {
                         )}
                     </div>
 
-                   
                 </div>
 
                 <div className="flex lg:hidden cursor-pointer pr-5" onClick={toggleDrawer}>
@@ -116,13 +109,13 @@ function Navbar() {
                 </div>
             </nav>
 
-            {/* Side Drawer */}
+            {}
             <div ref={drawerRef} className={`fixed z-10 top-0 right-0 h-full bg-white shadow-lg transition-transform duration-300 ${isDrawerOpen ? "translate-x-0" : "translate-x-full"}`}>
                 <div className="p-5 flex flex-col space-y-6">
                     <ul className="space-y-6">
                         <li><Link to="/" className="text-1xl font-bold hover:text-orange-500 duration-200">Dashboard</Link></li>
                         
-                        {/* Conditional "Projects" Link in drawer */}
+                        {}
                         <li>
                             <Link
                                 to={userRole === "freelancer" ? "/freelancer-projects" : "/client-projects"}

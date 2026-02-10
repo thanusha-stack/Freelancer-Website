@@ -6,9 +6,7 @@ const { OAuth2Client } = require("google-auth-library");
 const User = require("../models/User");
 
 const SECRET = process.env.JWT_SECRET || "SECRET_KEY";
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-
-// ================= REGISTER =================
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 router.post("/register", async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
@@ -20,9 +18,7 @@ router.post("/register", async (req, res) => {
         if (existing)
             return res.status(400).json({ message: "Already registered" });
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // allow only client or freelancer
+        const hashedPassword = await bcrypt.hash(password, 10);
         const allowedRoles = ["client", "freelancer"];
         const userRole = allowedRoles.includes(role) ? role : "client";
 
@@ -37,9 +33,7 @@ router.post("/register", async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-});
-
-// ================= LOGIN =================
+});
 router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -58,7 +52,7 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign(
             { id: user._id, role: user.role },
             SECRET,
-            { expiresIn: "7d" } // Token expires in 7 days
+            { expiresIn: "7d" } 
         );
 
         res.json({
@@ -69,9 +63,7 @@ router.post("/login", async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-});
-
-// ================= GOOGLE LOGIN =================
+});
 router.post("/google-login", async (req, res) => {
     try {
         const { token, role } = req.body;
@@ -101,13 +93,13 @@ router.post("/google-login", async (req, res) => {
         const jwtToken = jwt.sign(
             { id: user._id, role: user.role },
             SECRET,
-            { expiresIn: "7d" } // Token expires in 7 days
+            { expiresIn: "7d" } 
         );
 
         res.json({
             token: jwtToken,
             role: user.role,
-            isProfileComplete: user.isProfileComplete, // Fixed Typo from ProfileComplete
+            isProfileComplete: user.isProfileComplete, 
         });
     } catch (err) {
         console.error(err);

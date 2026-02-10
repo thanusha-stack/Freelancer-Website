@@ -7,16 +7,7 @@ const FreelancerPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("");
   const { data: freelancersList, loading } = useFetch('/api/users?role=freelancer');
-  const freelancers = freelancersList || []; // fallback to empty array
-
-  // Deprecated manual fetch
-  /* 
-  useEffect(() => {
-    ... 
-  }, []);
-  */
-
-  // Filter and map freelancers based on search query and selected filter
+  const freelancers = freelancersList || []; 
   const filteredFreelancers = freelancers
     .filter(freelancer =>
       freelancer.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
@@ -26,7 +17,7 @@ const FreelancerPage = () => {
       name: user.name,
       role: user.bio || "Freelancer",
       hourlyRate: user.hourlyRate || 0,
-      jobSuccess: 95, // Placeholder
+      jobSuccess: 95, 
       tags: user.skills || [],
       image: user.profilePhoto || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name) + '&size=200&background=random',
     }));

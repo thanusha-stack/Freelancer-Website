@@ -30,7 +30,7 @@ function AboutUs() {
                         <h3>Your Name</h3>
                         <p>Your bio here. Share your background and role in the company.</p>
                     </div>
-                    {/* Add more team members as needed */}
+                    {}
                 </section>
                 <section id="cta">
                     <h2>Join Us Today!</h2>

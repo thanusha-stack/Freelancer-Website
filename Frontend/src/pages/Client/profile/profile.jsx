@@ -33,7 +33,7 @@ function ClientProfile() {
     if (file) {
       setProfileData((prevData) => ({
         ...prevData,
-        profilePicture: file.name, // Or save the actual file if needed
+        profilePicture: file.name, 
       }));
     }
   };
@@ -48,9 +48,7 @@ function ClientProfile() {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      });
-
-      // Refresh profile status in AuthContext
+      });
       await refreshProfileStatus();
 
       alert("Profile Updated Successfully!");
@@ -71,7 +69,7 @@ function ClientProfile() {
           <p className="text-center text-gray-500">Click Logo to upload your profile</p>
         </div>
 
-        {/* Name */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Name</label>
           <input
@@ -84,7 +82,7 @@ function ClientProfile() {
           />
         </div>
 
-        {/* Contact Person */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Contact Person</label>
           <input
@@ -97,8 +95,7 @@ function ClientProfile() {
           />
         </div>
 
-
-        {/* Company Name */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Company Name</label>
           <input
@@ -111,7 +108,7 @@ function ClientProfile() {
           />
         </div>
 
-        {/* Location */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Company Location</label>
           <input
@@ -124,7 +121,7 @@ function ClientProfile() {
           />
         </div>
 
-        {/* Country Selector */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Country</label>
           <select
@@ -141,7 +138,7 @@ function ClientProfile() {
           </select>
         </div>
 
-        {/* Phone Number */}
+        {}
         <div className="mb-6">
           <label className="block text-lg font-medium text-gray-700 mb-2">Phone Number</label>
           <div className="flex space-x-4">
@@ -163,7 +160,7 @@ function ClientProfile() {
           </div>
         </div>
 
-        {/* Website */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Website (Optional)</label>
           <input
@@ -176,7 +173,7 @@ function ClientProfile() {
           />
         </div>
 
-        {/* Industry */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Industry</label>
           <select
@@ -194,7 +191,7 @@ function ClientProfile() {
           </select>
         </div>
 
-        {/* Description */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Company Description</label>
           <textarea
@@ -207,7 +204,7 @@ function ClientProfile() {
           />
         </div>
 
-        {/* Save Button */}
+        {}
         <div className="text-right mt-4">
           <button
             onClick={handleSaveProfile}

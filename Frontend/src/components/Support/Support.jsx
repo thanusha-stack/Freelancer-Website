@@ -31,7 +31,7 @@ function Support() {
           Support
         </h1>
 
-        {/* Support Form */}
+        {}
         {!isSubmitted ? (
           <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6">
             <h2 className="text-2xl font-semibold mb-4">Need help? Contact us!</h2>
@@ -97,7 +97,7 @@ function Support() {
           </div>
         )}
 
-        {/* FAQs and Live Chat */}
+        {}
         <div className="max-w-4xl mx-auto mt-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-white shadow-md rounded-lg p-6">

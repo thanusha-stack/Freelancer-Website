@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 function Signup() {
   const [formData, setFormData] = useState({
     name: "",
@@ -28,8 +27,7 @@ function Signup() {
     }
     if (password !== confirmPassword) {
       return "Passwords do not match";
-    }
-    // Add additional validation logic (e.g., email regex) if necessary
+    }
     return "";
   };
 

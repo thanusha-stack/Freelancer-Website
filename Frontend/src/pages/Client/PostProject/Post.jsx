@@ -10,7 +10,7 @@ function PostProject() {
   const [fileName, setFileName] = useState("");
 
   const [formData, setFormData] = useState({
-    name: "", // Using as Project Name / Company Name
+    name: "", 
     email: "",
     task: "Web Development",
     experience: "Beginner",
@@ -53,8 +53,7 @@ function PostProject() {
         task: formData.task,
         description: formData.description,
         budget: formData.budget,
-        deadline: formData.deadline,
-        // Add other fields to description or separate fields if schema supported
+        deadline: formData.deadline,
       };
 
       await axios.post(`${import.meta.env.VITE_API_URL}/api/projects`, payload, {
@@ -71,7 +70,7 @@ function PostProject() {
   return (
     <>
       <div className="bg-gray-100 min-h-screen py-10">
-        {/* Profile Creation Section */}
+        {}
         <section className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg ">
           <p className="text-2xl font-semibold text-gray-700 mb-6">
             Tell us about the Project
@@ -101,7 +100,7 @@ function PostProject() {
             />
           </div>
 
-          {/* Work Type */}
+          {}
           <div className="mb-6">
             <label className="block text-lg text-gray-700 font-medium mb-2">
               What kind of project are you posting?
@@ -120,7 +119,7 @@ function PostProject() {
             </select>
           </div>
 
-          {/* Experience */}
+          {}
           <div className="mb-6">
             <label className="block text-lg text-gray-700 font-medium mb-2">
               Experience Needed
@@ -136,7 +135,7 @@ function PostProject() {
             </select>
           </div>
 
-          {/* Experience */}
+          {}
           <div className="mb-6">
             <label className="block text-lg text-gray-700 font-medium mb-2">
               Preferred Communication Method
@@ -152,7 +151,7 @@ function PostProject() {
             </select>
           </div>
 
-          {/* Rate */}
+          {}
           <div className="mb-6">
             <label className="block text-lg text-gray-700 font-medium mb-2">
               Budget
@@ -170,7 +169,7 @@ function PostProject() {
             </div>
           </div>
 
-          {/* Overview Section */}
+          {}
           <div className="mb-6">
             <label className="block text-lg text-gray-700 font-medium mb-2">Overview about project</label>
             <textarea
@@ -184,7 +183,7 @@ function PostProject() {
           </div>
 
           <div className='flex md:flex-row flex-col'>
-            {/* Deadline */}
+            {}
             <div className='flex space-x-4 align-center'>
               <div className="mb-6">
                 <label className="block text-lg font-medium text-gray-700 mb-2">
@@ -237,7 +236,7 @@ function PostProject() {
               </div>
             </div>
           </div>
-          {/* Save Button */}
+          {}
           <div className="text-right mt-4">
             <button
               onClick={handleSubmit}

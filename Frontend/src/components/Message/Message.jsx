@@ -1,28 +1,24 @@
-// Messaging.js
+
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 const SOCKET_URL = 'ws://your-backend-url/ws';
 
 const Messaging = () => {
-  const [messages, setMessages] = useState([]); // Store chat history
-  const [newMessage, setNewMessage] = useState(""); // Input state
-  const [isConnected, setIsConnected] = useState(false); // WebSocket status
-  const socketRef = useRef(null); // WebSocket reference
-  const chatEndRef = useRef(null); // Reference to scroll to the latest message
-
-  // Fetch chat history from the backend
+  const [messages, setMessages] = useState([]); 
+  const [newMessage, setNewMessage] = useState(""); 
+  const [isConnected, setIsConnected] = useState(false); 
+  const socketRef = useRef(null); 
+  const chatEndRef = useRef(null); 
   useEffect(() => {
     axios
       .get("/messages")
       .then((response) => setMessages(Array.isArray(response.data) ? response.data : []))
       .catch((error) => {
         console.error("Error fetching messages:", error);
-        setMessages([]); // Fallback to an empty array on error
+        setMessages([]); 
       });
-  }, []);
-
-  // WebSocket connection and event handling
+  }, []);
   useEffect(() => {
     const connectWebSocket = () => {
       socketRef.current = new WebSocket(SOCKET_URL);
@@ -47,38 +43,28 @@ const Messaging = () => {
 
       socketRef.current.onclose = () => {
         console.warn("WebSocket closed. Reconnecting...");
-        setIsConnected(false);
-
-        // Attempt to reconnect after 5 seconds
+        setIsConnected(false);
         setTimeout(connectWebSocket, 5000);
       };
     };
 
-    connectWebSocket(); // Initial connection attempt
+    connectWebSocket(); 
 
-    return () => socketRef.current?.close(); // Cleanup on unmount
-  }, []);
-
-  // Scroll to the latest message whenever messages change
+    return () => socketRef.current?.close(); 
+  }, []);
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  // Handle input change
-  const handleInputChange = (e) => setNewMessage(e.target.value);
-
-  // Send a new message
+  }, [messages]);
+  const handleInputChange = (e) => setNewMessage(e.target.value);
   const sendMessage = async () => {
-    if (!newMessage.trim()) return; // Prevent empty messages
+    if (!newMessage.trim()) return; 
 
     const messageData = { text: newMessage, sender: "You" };
 
-    try {
-      // Save message to the backend
-      await axios.post("/messages", messageData);
-      // Broadcast message via WebSocket
+    try {
+      await axios.post("/messages", messageData);
       socketRef.current.send(JSON.stringify(messageData));
-      setNewMessage(""); // Clear input field
+      setNewMessage(""); 
     } catch (error) {
       console.error("Error sending message:", error);
     }
@@ -86,16 +72,16 @@ const Messaging = () => {
 
   return (
     <div className="h-screen bg-gray-100 flex">
-      {/* Sidebar: Conversations List */}
+      {}
       <div className="w-1/3 lg:w-1/4 bg-white border border-2 border-gray-100">
         <div className="p-4 border border-2 bg-gray-50 fixed w-1/3 h-18 top-16">
           <p className="text-xl  font-semibold text-orange-600">Messages</p>
         </div>
       </div>
 
-      {/* Chat View */}
+      {}
       <div className="flex-1 flex flex-col">
-        {/* Chat Header */}
+        {}
         <div className="p-4 border border-2 border-gray-100 bg-white flex items-center justify-between fixed w-full">
           <div>
             <p className="text-lg font-semibold text-gray-800">Chat with Akshay</p>
@@ -103,7 +89,7 @@ const Messaging = () => {
           </div>
         </div>
 
-        {/* Messages Container */}
+        {}
         <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-r from-orange-500 to-orange-200">
           {messages.map((msg, index) => (
             <div
@@ -123,7 +109,7 @@ const Messaging = () => {
           <div ref={chatEndRef} />
         </div>
 
-        {/* Message Input */}
+        {}
         <div className="p-4 bg-white border flex items-center fixed bottom-0 md:w-3/4">
           <input
             type="text"

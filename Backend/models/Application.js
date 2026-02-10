@@ -32,9 +32,7 @@ const applicationSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-});
-
-// Compound index to prevent duplicate applications
+});
 applicationSchema.index({ projectId: 1, freelancerId: 1 }, { unique: true });
 
 module.exports = mongoose.model("Application", applicationSchema);

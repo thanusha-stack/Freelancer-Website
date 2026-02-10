@@ -7,22 +7,19 @@ const CLNotifyBell = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Store the current path as the previous path if notifications are not open
+  useEffect(() => {
     if (!isNotificationOpen) {
       setPreviousPath(location.pathname);
     }
   }, [isNotificationOpen, location.pathname]);
 
   const handleNotificationToggle = () => {
-    if (isNotificationOpen) {
-      // Close notifications and return to the previous path if it exists
+    if (isNotificationOpen) {
       setIsNotificationOpen(false);
       if (previousPath) {
         navigate(previousPath);
       }
-    } else {
-      // Open notifications and navigate to the notification page
+    } else {
       setIsNotificationOpen(true);
       navigate('/ClientNotification');
     }

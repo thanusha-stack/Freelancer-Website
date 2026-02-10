@@ -1,15 +1,13 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-// https://vitejs.dev/config/
+import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: '0.0.0.0', // Makes the server accessible externally
+    host: '0.0.0.0', 
     port: 3000,
   },
   build: {
-    outDir: 'dist', // Publish directory set to 'dist'
+    outDir: 'dist', 
   },
-  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg']
+  assetsInclude: ['***.jpg', '***.svg']
 })

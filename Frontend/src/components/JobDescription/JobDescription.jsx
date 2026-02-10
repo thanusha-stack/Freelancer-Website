@@ -19,9 +19,7 @@ function JobDescription() {
     estimatedDuration: '',
     dateOfBirth: '',
   });
-  const [errors, setErrors] = useState({});
-
-  // If no job in state, redirect back
+  const [errors, setErrors] = useState({});
   useEffect(() => {
     if (!job) {
       alert("No job selected. Redirecting...");
@@ -50,8 +48,7 @@ function JobDescription() {
 
     if (!applicationData.dateOfBirth) {
       newErrors.dateOfBirth = "Date of birth is required";
-    } else {
-      // Age verification
+    } else {
       const dob = new Date(applicationData.dateOfBirth);
       const today = new Date();
       let age = today.getFullYear() - dob.getFullYear();
@@ -75,8 +72,7 @@ function JobDescription() {
     setApplicationData(prev => ({
       ...prev,
       [name]: value
-    }));
-    // Clear error for this field
+    }));
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -188,7 +184,7 @@ function JobDescription() {
           <div className="mt-8 border-t pt-6">
             <h3 className="text-2xl font-bold mb-4">Submit Your Application</h3>
             <form onSubmit={handleSubmitApplication} className="space-y-4">
-              {/* Cover Letter */}
+              {}
               <div>
                 <label className="block text-lg font-medium mb-2">
                   Cover Letter <span className="text-red-500">*</span>
@@ -205,7 +201,7 @@ function JobDescription() {
                 {errors.coverLetter && <p className="text-red-500 text-sm mt-1">{errors.coverLetter}</p>}
               </div>
 
-              {/* Proposed Rate */}
+              {}
               <div>
                 <label className="block text-lg font-medium mb-2">
                   Proposed Rate (USD) <span className="text-red-500">*</span>
@@ -223,7 +219,7 @@ function JobDescription() {
                 {errors.proposedRate && <p className="text-red-500 text-sm mt-1">{errors.proposedRate}</p>}
               </div>
 
-              {/* Estimated Duration */}
+              {}
               <div>
                 <label className="block text-lg font-medium mb-2">
                   Estimated Duration <span className="text-red-500">*</span>
@@ -240,7 +236,7 @@ function JobDescription() {
                 {errors.estimatedDuration && <p className="text-red-500 text-sm mt-1">{errors.estimatedDuration}</p>}
               </div>
 
-              {/* Date of Birth (Age Verification) */}
+              {}
               <div>
                 <label className="block text-lg font-medium mb-2">
                   Date of Birth <span className="text-red-500">*</span> <span className="text-sm text-gray-500">(Must be 18+)</span>

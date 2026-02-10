@@ -31,9 +31,7 @@ function ClientProfileCreate() {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      });
-
-      // Refresh profile status in AuthContext
+      });
       await refreshProfileStatus();
 
       alert("Profile Updated Successfully!");
@@ -49,7 +47,7 @@ function ClientProfileCreate() {
       <section className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg">
         <p className="text-2xl font-semibold text-gray-700 mb-6">Create Client Profile</p>
 
-        {/* Company Name */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Company Name</label>
           <input
@@ -62,7 +60,7 @@ function ClientProfileCreate() {
           />
         </div>
 
-        {/* Contact Person */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Contact Person</label>
           <input
@@ -75,8 +73,7 @@ function ClientProfileCreate() {
           />
         </div>
 
-
-        {/* Phone Number */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Phone Number</label>
           <input
@@ -89,7 +86,7 @@ function ClientProfileCreate() {
           />
         </div>
 
-        {/* Website */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Website</label>
           <input
@@ -102,7 +99,7 @@ function ClientProfileCreate() {
           />
         </div>
 
-        {/* Industry */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Industry</label>
           <select
@@ -119,7 +116,7 @@ function ClientProfileCreate() {
           </select>
         </div>
 
-        {/* Company Overview */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Company Overview</label>
           <textarea
@@ -132,7 +129,7 @@ function ClientProfileCreate() {
           />
         </div>
 
-        {/* Location */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Location</label>
           <input
@@ -145,7 +142,7 @@ function ClientProfileCreate() {
           />
         </div>
 
-        {/* Country */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Country</label>
           <select
@@ -162,7 +159,7 @@ function ClientProfileCreate() {
           </select>
         </div>
 
-        {/* Save Button */}
+        {}
         <div className="text-right mt-4">
           <button
             onClick={handleSubmit}

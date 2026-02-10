@@ -9,9 +9,9 @@ function Certify() {
   const [profileData, setProfileData] = useState({
     name: '',
     description: '',
-    skill: 'Web Development', // We might want to map this to 'skills' array in backend
-    experience: 'Beginner', // Mapped to experienceLevel
-    language: 'Beginner', // Mapped to language level? Or Just language? UI says "Language (English)" -> "Beginner" etc.
+    skill: 'Web Development', 
+    experience: 'Beginner', 
+    language: 'Beginner', 
     rate: '',
     location: '',
     country: 'United States',
@@ -51,7 +51,7 @@ function Certify() {
       const formData = new FormData();
       formData.append("name", profileData.name);
       formData.append("description", profileData.description);
-      formData.append("skills", profileData.skill); // Backend expects array, but multer handles strings ok, or we can JSON.stringify if complex
+      formData.append("skills", profileData.skill); 
       formData.append("experienceLevel", profileData.experience);
       formData.append("language", profileData.language);
       formData.append("hourlyRate", profileData.rate);
@@ -69,9 +69,7 @@ function Certify() {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         }
-      });
-
-      // Refresh profile status in AuthContext
+      });
       await refreshProfileStatus();
 
       alert("Profile Updated Successfully!");
@@ -87,7 +85,7 @@ function Certify() {
       <section className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg">
         <p className="text-2xl font-semibold text-gray-700 mb-6">Create Profile</p>
 
-        {/* Name */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Name</label>
           <input
@@ -100,7 +98,7 @@ function Certify() {
           />
         </div>
 
-        {/* Overview */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Overview</label>
           <textarea
@@ -113,7 +111,7 @@ function Certify() {
           />
         </div>
 
-        {/* Work Type */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">What kind of work are you here to do?</label>
           <select
@@ -129,7 +127,7 @@ function Certify() {
           </select>
         </div>
 
-        {/* Experience */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Experience</label>
           <select
@@ -144,7 +142,7 @@ function Certify() {
           </select>
         </div>
 
-        {/* Language */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Language (English)</label>
           <select
@@ -159,7 +157,7 @@ function Certify() {
           </select>
         </div>
 
-        {/* Rate */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Rate</label>
           <input
@@ -172,7 +170,7 @@ function Certify() {
           />
         </div>
 
-        {/* Location */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Location</label>
           <input
@@ -185,7 +183,7 @@ function Certify() {
           />
         </div>
 
-        {/* Country */}
+        {}
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Country</label>
           <select
@@ -202,7 +200,7 @@ function Certify() {
           </select>
         </div>
 
-        {/* Phone Number */}
+        {}
         <div className="mb-6">
           <label className="block text-lg font-medium text-gray-700 mb-2">Phone Number</label>
           <input
@@ -215,7 +213,7 @@ function Certify() {
           />
         </div>
 
-        {/* Date of Birth */}
+        {}
         <div className="mb-6">
           <label className="block text-lg font-medium text-gray-700 mb-2">Date of Birth</label>
           <input
@@ -227,7 +225,7 @@ function Certify() {
           />
         </div>
 
-        {/* Upload Resume */}
+        {}
         <div className="mb-6">
           <label className="block text-lg font-medium text-gray-700 mb-2">Upload Resume</label>
           <input
@@ -245,7 +243,7 @@ function Certify() {
           <span className="ml-4 text-gray-600">{fileName || "No file chosen"}</span>
         </div>
 
-        {/* Save Button */}
+        {}
         <div className="text-right mt-4">
           <button
             onClick={handleSubmit}

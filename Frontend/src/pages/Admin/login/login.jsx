@@ -20,8 +20,7 @@ function Login() {
     const { email, password } = formData;
     if (!email || !password) {
       return "Email and password are required";
-    }
-    // Add more validation logic if needed (e.g., regex for email)
+    }
     return "";
   };
 
@@ -34,12 +33,8 @@ function Login() {
     }
 
     setIsSubmitted(true);
-    setErrorMessage("");
-
-    // Add logic for backend authentication here
-    console.log("Form Data Submitted: ", formData);
-
-    // Example: Redirect to Dashboard after successful login
+    setErrorMessage("");
+    console.log("Form Data Submitted: ", formData);
     navigate("/dashboard");
   };
 

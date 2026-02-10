@@ -59,7 +59,7 @@ function App() {
           <Route path="/Support" element={<Support />} />
           <Route path="/LiveChat" element={<LiveChat />} />
           <Route path="/Login" element={<Login />} />
-          <Route path="/SignUp" element={<Login />} /> {/* Redirecting SignUp to Login as Login handles both */}
+          <Route path="/SignUp" element={<Login />} /> {}
 
           <Route path="/FreelancerPage" element={
             <ProtectedRoutes>

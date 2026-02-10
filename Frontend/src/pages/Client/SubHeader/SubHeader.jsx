@@ -11,9 +11,7 @@ function SubHeader() {
 
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
-  };
-
-  // Close the menu if clicked outside of it
+  };
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -24,9 +22,7 @@ function SubHeader() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
-
-  // Function to navigate to the dashboard
+  }, []);
   const handleNavigateToDashboard = () => {
     navigate('/ClientDashboard');
     setShowMenu(false);
@@ -46,7 +42,7 @@ function SubHeader() {
     <>
       <div className="bg-black shadow-md shadow-gray-500">
         <div className="max-w-7xl mx-auto flex items-center justify-between py-3 px-3">
-          {/* Profile Icon */}
+          {}
           <svg
             onClick={toggleMenu}
             width="30"
@@ -79,12 +75,12 @@ function SubHeader() {
             />
           </svg>
 
-          {/* Notification Icon */}
+          {}
           <div className="flex items-center gap-2">
             <CLNotifyBell />
           </div>
 
-          {/* Dropdown Menu */}
+          {}
           {showMenu && (
             <div
               ref={menuRef}
@@ -92,7 +88,7 @@ function SubHeader() {
             >
               <button
                 className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                onClick={handleNavigateToDashboard} // Use onClick here
+                onClick={handleNavigateToDashboard} 
               >
                 Dashboard
               </button>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Ensure you have react-router-dom installed
+import { Link } from "react-router-dom"; 
 import logo1 from '../assets/images/google.jpeg';
 import logo2 from '../assets/images/trust.png';
 import WebsiteDeveloper from '../assets/images/WebsiteDeveloper.svg';
@@ -7,10 +7,10 @@ import WebsiteDeveloper from '../assets/images/WebsiteDeveloper.svg';
 function Dashboard() {
   return (
     <div>
-      {/* Section 1 */}
+      {}
       <section>
         <div className="flex flex-col items-center px-6 mx-5 mt-5 space-y-0 md:flex-row md:space-y-0">
-          {/* Left item */}
+          {}
           <div className="flex flex-col space-y-12 md:w-1/2">
             <h1 className="max-w-md text-4xl font-bold text-left md:text-5xl md:text-left">
               Bring everyone together to build products
@@ -36,17 +36,17 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          {/* Right item - Illustration */}
+          {}
           <div>
             <img src={WebsiteDeveloper} alt="Illustration" className="hidden md:block" />
           </div>
         </div>
       </section>
 
-      {/* Section 2 */}
+      {}
       <section>
         <div className="flex flex-col px-4 mx-5 mt-10 space-y-12 md:space-y-0 md:flex-row">
-          {/* Left content */}
+          {}
           <div className="flex flex-col space-y-12 md:w-1/2">
             <h2 className="max-w-md text-4xl font-bold text-center md:text-left">
               What's different about HireElite?
@@ -56,9 +56,9 @@ function Dashboard() {
             </p>
           </div>
 
-          {/* Right content - Features */}
+          {}
           <div className="flex flex-col space-y-8 md:w-1/2">
-            {/* List Item 1 */}
+            {}
             <div className="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
               <div className="rounded-l-full bg-orange-200 md:bg-transparent">
                 <div className="flex items-center space-x-2">
@@ -80,7 +80,7 @@ function Dashboard() {
               </div>
             </div>
 
-            {/* List Item 2 */}
+            {}
             <div className="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
               <div className="rounded-l-full bg-orange-200 md:bg-transparent">
                 <div className="flex items-center space-x-2">
@@ -102,7 +102,7 @@ function Dashboard() {
               </div>
             </div>
 
-            {/* List Item 3 */}
+            {}
             <div className="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
               <div className="rounded-l-full bg-orange-200 md:bg-transparent">
                 <div className="flex items-center space-x-2">
