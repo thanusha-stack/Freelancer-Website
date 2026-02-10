@@ -12,7 +12,7 @@ router.post("/", authMiddleware, async (req, res) => {
             return res.status(403).json({ message: "Only freelancers can apply for jobs" });
         }
 
-        const { projectId, coverLetter, proposedRate, estimatedDuration, dateOfBirth } = req.body;
+        const { projectId, coverLetter, proposedRate, estimatedDuration, dateOfBirth, videoIntro } = req.body;
 
         // Input validation
         if (!projectId || !coverLetter || !proposedRate || !estimatedDuration) {
@@ -56,6 +56,7 @@ router.post("/", authMiddleware, async (req, res) => {
             coverLetter: sanitize(coverLetter),
             proposedRate: Number(proposedRate),
             estimatedDuration: sanitize(estimatedDuration),
+            videoIntro: videoIntro ? videoIntro.trim() : "",
         });
 
         res.status(201).json({
@@ -86,7 +87,14 @@ router.get("/", authMiddleware, async (req, res) => {
         }
 
         const applications = await Application.find(query)
-            .populate("projectId", "name task budget")
+            .populate({
+                path: "projectId",
+                select: "name task budget",
+                populate: {
+                    path: "clientId",
+                    select: "name email"
+                }
+            })
             .populate("freelancerId", "name email")
             .sort({ appliedAt: -1 });
 

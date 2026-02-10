@@ -23,6 +23,10 @@ const applicationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    videoIntro: {
+        type: String,
+        required: false // Optional for now, but user requested it
+    },
     status: {
         type: String,
         enum: ["Pending", "Accepted", "Rejected"],
@@ -32,7 +36,8 @@ const applicationSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-});
+});
+
 applicationSchema.index({ projectId: 1, freelancerId: 1 }, { unique: true });
 
 module.exports = mongoose.model("Application", applicationSchema);

@@ -4,8 +4,11 @@ import NewTask from "../../../assets/images/NewTask.svg";
 import { Link } from "react-router-dom";
 import SubHeader from "../SubHeader/SubHeader";
 import useFetch from "../../../hooks/useFetch";
+import { AuthContext } from "../../../context/AuthContext";
+import { useContext } from "react";
 
 function ClientViewProjects() {
+  const { user } = useContext(AuthContext);
   const { data: projects, loading: projectsLoading } = useFetch("/api/projects");
   const { data: freelancers, loading: freelancersLoading } = useFetch("/api/users?role=freelancer");
 
@@ -17,9 +20,9 @@ function ClientViewProjects() {
       <SubHeader />
       <section className="bg-white p-5">
         <div className="flex flex-col md:flex-row">
-          {}
+          { }
           <div className="w-full lg:w-1/2">
-            {}
+            { }
             <ul className="flex lg:align-center gap-5 md:space-x-12 p-5 overflow-x-auto">
               <li className="border shadow-[0_3px_10px_rgb(0,0,0,0.2)] space-x-7 px-10 py-10 bg-blue-500 text-sm text-white font-bold rounded-lg">
                 All Projects ({projectList.length})
@@ -32,14 +35,14 @@ function ClientViewProjects() {
               </li>
             </ul>
 
-            {}
+            { }
             <ul className="flex px-10 py-4 justify-between">
               <li className="w-1/3 text-center text-gray-600 font-bold ">Project</li>
               <li className="w-1/3 text-center text-gray-600 font-bold">Task</li>
               <li className="w-1/3 text-center text-gray-600 font-bold">Status</li>
             </ul>
 
-            {}
+            { }
             <div className="space-y-3">
               {projectsLoading ? (
                 <div className="text-center py-4">Loading projects...</div>
@@ -66,7 +69,7 @@ function ClientViewProjects() {
             </div>
           </div>
 
-          {}
+          { }
           <div className="w-full lg:w-1/2 px-5">
             <div className="flex  flex-col items-center">
               <img
@@ -76,7 +79,7 @@ function ClientViewProjects() {
                 height="60"
                 width="60"
               />
-              <div className="text-2xl font-bold mt-2">Alex</div>
+              <div className="text-2xl font-bold mt-2">{user?.name || "Client"}</div>
               <div className="flex gap-2">
                 <Link to="/ClientProfile">
                   <button className="text-orange-500 hover:underline">Edit Profile </button>
@@ -84,7 +87,7 @@ function ClientViewProjects() {
               </div>
             </div>
 
-            {}
+            { }
             <div className="mt-0 mx-16">
               <h3 className="font-bold text-orange-500">Freelancers</h3>
               <div className="border mt-2 px-3 pb-5 rounded-lg max-h-60 overflow-y-auto">
@@ -103,7 +106,7 @@ function ClientViewProjects() {
               </div>
             </div>
 
-            {}
+            { }
             <div className="mt-0 mx-16">
               <h3 className="font-bold text-orange-500">Project</h3>
               <div className="flex flex-col items-center justify-center h-full">
