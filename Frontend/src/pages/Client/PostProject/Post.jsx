@@ -72,7 +72,10 @@ function PostProject() {
     <>
       <div className="bg-gray-100 min-h-screen py-10">
         { }
-        <section className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg ">
+        <form
+          onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}
+          className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg "
+        >
           <p className="text-2xl font-semibold text-gray-700 mb-6">
             Tell us about the Project
           </p>
@@ -230,6 +233,7 @@ function PostProject() {
                 />
 
                 <button
+                  type="button"
                   onClick={triggerFileSelect}
                   className="px-4 py-2 bg-orange-200 text-orange-500 rounded-full focus:ring-2 focus:ring-orange-500"
                 >
@@ -245,12 +249,12 @@ function PostProject() {
           { }
           <div className="text-right mt-4">
             <button
-              onClick={handleSubmit}
+              type="submit"
               className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-300 focus:ring-2 focus:ring-orange-500">
               Upload Project
             </button>
           </div>
-        </section>
+        </form>
       </div>
     </>
   );

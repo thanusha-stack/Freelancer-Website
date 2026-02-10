@@ -110,65 +110,66 @@ function Login() {
         <h2 className="text-xl font-semibold text-gray-800 mb-5">
           {isLogin ? "LOGIN" : "REGISTER"} ({form.role})
         </h2>
+        <form onSubmit={(e) => { e.preventDefault(); isLogin ? handleLogin() : register(); }}>
+          {!isLogin && (
+            <input
+              type="text"
+              placeholder="Name"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              className="w-full p-2 mb-3 rounded bg-gray-200 focus:outline-none"
+              required
+            />
+          )}
 
-        {!isLogin && (
           <input
-            type="text"
-            placeholder="Name"
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            type="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             className="w-full p-2 mb-3 rounded bg-gray-200 focus:outline-none"
             required
           />
-        )}
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className="w-full p-2 mb-3 rounded bg-gray-200 focus:outline-none"
-          required
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            className="w-full p-2 mb-4 rounded bg-gray-200 focus:outline-none"
+            required
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          className="w-full p-2 mb-4 rounded bg-gray-200 focus:outline-none"
-          required
-        />
-
-        {/* Role Selection for Registration if not in URL */}
-        {!isLogin && !roleFromURL && (
-          <div className="mb-4 text-left">
-            <label className="mr-4">
-              <input
-                type="radio"
-                value="freelancer"
-                checked={form.role === "freelancer"}
-                onChange={() => setForm({ ...form, role: "freelancer" })}
-              /> Freelancer
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="client"
-                checked={form.role === "client"}
-                onChange={() => setForm({ ...form, role: "client" })}
-              /> Client
-            </label>
-          </div>
-        )}
+          {/* Role Selection for Registration if not in URL */}
+          {!isLogin && !roleFromURL && (
+            <div className="mb-4 text-left">
+              <label className="mr-4">
+                <input
+                  type="radio"
+                  value="freelancer"
+                  checked={form.role === "freelancer"}
+                  onChange={() => setForm({ ...form, role: "freelancer" })}
+                /> Freelancer
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="client"
+                  checked={form.role === "client"}
+                  onChange={() => setForm({ ...form, role: "client" })}
+                /> Client
+              </label>
+            </div>
+          )}
 
 
-        <button
-          onClick={isLogin ? handleLogin : register}
-          className="w-full py-2 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700"
-        >
-          {isLogin ? "LOGIN" : "REGISTER"}
-        </button>
+          <button
+            type="submit"
+            className="w-full py-2 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700"
+          >
+            {isLogin ? "LOGIN" : "REGISTER"}
+          </button>
+        </form>
 
         <p
           onClick={() => setIsLogin(!isLogin)}

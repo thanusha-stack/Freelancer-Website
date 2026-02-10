@@ -45,7 +45,10 @@ function ClientProfileCreate() {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <section className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg">
+      <form
+        onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}
+        className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg"
+      >
         <p className="text-2xl font-semibold text-gray-700 mb-6">Create Client Profile</p>
 
         { }
@@ -169,13 +172,13 @@ function ClientProfileCreate() {
         { }
         <div className="text-right mt-4">
           <button
-            onClick={handleSubmit}
+            type="submit"
             className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-300 focus:ring-2 focus:ring-orange-500"
           >
             Save Profile
           </button>
         </div>
-      </section>
+      </form>
     </div>
   );
 }
