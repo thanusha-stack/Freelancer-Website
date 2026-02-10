@@ -118,6 +118,7 @@ function Login() {
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             className="w-full p-2 mb-3 rounded bg-gray-200 focus:outline-none"
+            required
           />
         )}
 
@@ -127,6 +128,7 @@ function Login() {
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           className="w-full p-2 mb-3 rounded bg-gray-200 focus:outline-none"
+          required
         />
 
         <input
@@ -135,6 +137,7 @@ function Login() {
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           className="w-full p-2 mb-4 rounded bg-gray-200 focus:outline-none"
+          required
         />
 
         {/* Role Selection for Registration if not in URL */}

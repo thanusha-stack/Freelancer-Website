@@ -10,7 +10,7 @@ function PostProject() {
   const [fileName, setFileName] = useState("");
 
   const [formData, setFormData] = useState({
-    name: "", 
+    name: "",
     email: "",
     task: "Web Development",
     experience: "Beginner",
@@ -53,7 +53,8 @@ function PostProject() {
         task: formData.task,
         description: formData.description,
         budget: formData.budget,
-        deadline: formData.deadline,
+        deadline: formData.deadline,
+
       };
 
       await axios.post(`${import.meta.env.VITE_API_URL}/api/projects`, payload, {
@@ -70,7 +71,7 @@ function PostProject() {
   return (
     <>
       <div className="bg-gray-100 min-h-screen py-10">
-        {}
+        { }
         <section className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg ">
           <p className="text-2xl font-semibold text-gray-700 mb-6">
             Tell us about the Project
@@ -85,6 +86,7 @@ function PostProject() {
               onChange={handleInputChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter Project Name"
+              required
             />
           </div>
 
@@ -97,10 +99,11 @@ function PostProject() {
               onChange={handleInputChange}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your Email ID"
+              required
             />
           </div>
 
-          {}
+          { }
           <div className="mb-6">
             <label className="block text-lg text-gray-700 font-medium mb-2">
               What kind of project are you posting?
@@ -119,7 +122,7 @@ function PostProject() {
             </select>
           </div>
 
-          {}
+          { }
           <div className="mb-6">
             <label className="block text-lg text-gray-700 font-medium mb-2">
               Experience Needed
@@ -135,7 +138,7 @@ function PostProject() {
             </select>
           </div>
 
-          {}
+          { }
           <div className="mb-6">
             <label className="block text-lg text-gray-700 font-medium mb-2">
               Preferred Communication Method
@@ -151,7 +154,7 @@ function PostProject() {
             </select>
           </div>
 
-          {}
+          { }
           <div className="mb-6">
             <label className="block text-lg text-gray-700 font-medium mb-2">
               Budget
@@ -169,7 +172,7 @@ function PostProject() {
             </div>
           </div>
 
-          {}
+          { }
           <div className="mb-6">
             <label className="block text-lg text-gray-700 font-medium mb-2">Overview about project</label>
             <textarea
@@ -179,11 +182,12 @@ function PostProject() {
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500"
               rows="5"
               placeholder="Provide a brief overview..."
+              required
             ></textarea>
           </div>
 
           <div className='flex md:flex-row flex-col'>
-            {}
+            { }
             <div className='flex space-x-4 align-center'>
               <div className="mb-6">
                 <label className="block text-lg font-medium text-gray-700 mb-2">
@@ -195,6 +199,7 @@ function PostProject() {
                   value={formData.startDate}
                   onChange={handleInputChange}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
                 />
               </div>
               <div className="mb-6">
@@ -207,6 +212,7 @@ function PostProject() {
                   value={formData.deadline}
                   onChange={handleInputChange}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
                 />
               </div>
             </div>
@@ -236,7 +242,7 @@ function PostProject() {
               </div>
             </div>
           </div>
-          {}
+          { }
           <div className="text-right mt-4">
             <button
               onClick={handleSubmit}

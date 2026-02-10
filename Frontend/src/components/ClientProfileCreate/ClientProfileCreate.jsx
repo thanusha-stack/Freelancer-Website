@@ -31,7 +31,8 @@ function ClientProfileCreate() {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      });
+      });
+
       await refreshProfileStatus();
 
       alert("Profile Updated Successfully!");
@@ -47,7 +48,7 @@ function ClientProfileCreate() {
       <section className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg">
         <p className="text-2xl font-semibold text-gray-700 mb-6">Create Client Profile</p>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Company Name</label>
           <input
@@ -57,10 +58,11 @@ function ClientProfileCreate() {
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your company name"
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Contact Person</label>
           <input
@@ -70,10 +72,11 @@ function ClientProfileCreate() {
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your name"
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Phone Number</label>
           <input
@@ -83,10 +86,11 @@ function ClientProfileCreate() {
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your phone number"
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Website</label>
           <input
@@ -96,10 +100,11 @@ function ClientProfileCreate() {
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your website"
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Industry</label>
           <select
@@ -116,7 +121,7 @@ function ClientProfileCreate() {
           </select>
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Company Overview</label>
           <textarea
@@ -126,10 +131,11 @@ function ClientProfileCreate() {
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500"
             rows="5"
             placeholder="Provide a brief overview of your company..."
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Location</label>
           <input
@@ -139,10 +145,11 @@ function ClientProfileCreate() {
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your office location"
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Country</label>
           <select
@@ -159,7 +166,7 @@ function ClientProfileCreate() {
           </select>
         </div>
 
-        {}
+        { }
         <div className="text-right mt-4">
           <button
             onClick={handleSubmit}

@@ -9,9 +9,9 @@ function Certify() {
   const [profileData, setProfileData] = useState({
     name: '',
     description: '',
-    skill: 'Web Development', 
-    experience: 'Beginner', 
-    language: 'Beginner', 
+    skill: 'Web Development',
+    experience: 'Beginner',
+    language: 'Beginner',
     rate: '',
     location: '',
     country: 'United States',
@@ -51,7 +51,7 @@ function Certify() {
       const formData = new FormData();
       formData.append("name", profileData.name);
       formData.append("description", profileData.description);
-      formData.append("skills", profileData.skill); 
+      formData.append("skills", profileData.skill);
       formData.append("experienceLevel", profileData.experience);
       formData.append("language", profileData.language);
       formData.append("hourlyRate", profileData.rate);
@@ -69,7 +69,8 @@ function Certify() {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         }
-      });
+      });
+
       await refreshProfileStatus();
 
       alert("Profile Updated Successfully!");
@@ -85,7 +86,7 @@ function Certify() {
       <section className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg">
         <p className="text-2xl font-semibold text-gray-700 mb-6">Create Profile</p>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Name</label>
           <input
@@ -95,10 +96,11 @@ function Certify() {
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your name"
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Overview</label>
           <textarea
@@ -108,10 +110,11 @@ function Certify() {
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500"
             rows="5"
             placeholder="Provide a brief overview of yourself..."
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">What kind of work are you here to do?</label>
           <select
@@ -127,7 +130,7 @@ function Certify() {
           </select>
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Experience</label>
           <select
@@ -142,7 +145,7 @@ function Certify() {
           </select>
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Language (English)</label>
           <select
@@ -157,7 +160,7 @@ function Certify() {
           </select>
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Rate</label>
           <input
@@ -167,10 +170,11 @@ function Certify() {
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Your hourly rate"
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Location</label>
           <input
@@ -180,10 +184,11 @@ function Certify() {
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your location"
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg text-gray-700 font-medium mb-2">Country</label>
           <select
@@ -200,7 +205,7 @@ function Certify() {
           </select>
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg font-medium text-gray-700 mb-2">Phone Number</label>
           <input
@@ -210,10 +215,11 @@ function Certify() {
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter your phone number"
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg font-medium text-gray-700 mb-2">Date of Birth</label>
           <input
@@ -222,10 +228,11 @@ function Certify() {
             value={profileData.dob}
             onChange={handleChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
           />
         </div>
 
-        {}
+        { }
         <div className="mb-6">
           <label className="block text-lg font-medium text-gray-700 mb-2">Upload Resume</label>
           <input
@@ -243,7 +250,7 @@ function Certify() {
           <span className="ml-4 text-gray-600">{fileName || "No file chosen"}</span>
         </div>
 
-        {}
+        { }
         <div className="text-right mt-4">
           <button
             onClick={handleSubmit}
