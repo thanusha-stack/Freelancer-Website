@@ -1,73 +1,166 @@
-# 🌟 Freelance Job Platform
+# 💼 Freelancer Platform – MERN Stack Website
 
-A comprehensive MERN stack platform connecting freelancers with clients.
+A full-stack MERN (MongoDB, Express, React, Node.js) web application that connects clients and freelancers through a role-based system for posting projects, applying to jobs, managing profiles, and handling project workflows.
 
-## 📁 Project Structure
-
-- **`Backend/`**: Express.js server with MongoDB (Mongoose).
-- **`Frontend/`**: React application built with Vite and Tailwind CSS.
-
-## 🚀 Key Features
-
-- **🔐 User Authentication:** Secure signup and login for both Freelancers and Clients.
-- **📋 Freelancer Dashboard:** Browse projects, view details, and submit proposals.
-- **💼 Client Dashboard:** Post project listings and manage freelancer applications.
-- **📱 Modern UI/UX:** Responsive design optimized for all devices.
-
-## 🛠️ Tech Stack
-
-- **Frontend:** React, Vite, Tailwind CSS, Axios, React Router.
-- **Backend:** Node.js, Express.js, MongoDB, JWT, Multer.
-- **Authentication:** Google OAuth, JWT.
-
-## 📖 Getting Started
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v14+)
-- [MongoDB](https://www.mongodb.com/) (Local or Atlas)
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/thanusha-stack/Freelancer-Website.git
-   cd Freelancer-Website
-   ```
-
-2. **Frontend Setup:**
-   ```bash
-   cd Frontend
-   npm install
-   ```
-   Create a `.env` file in the `Frontend/` directory and add your environment variables (e.g., Google Client ID).
-
-3. **Backend Setup:**
-   ```bash
-   cd ../Backend
-   npm install
-   ```
-   Create a `.env` file in the `Backend/` directory and add your database URI, JWT secret, etc.
-
-### Running the Application
-
-1. **Start the Backend server:**
-   ```bash
-   cd Backend
-   npm start
-   ```
-
-2. **Start the Frontend development server:**
-   ```bash
-   cd Frontend
-   npm run dev
-   ```
-
-## 🎉 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
+This project is built as a real-world production-style platform suitable for portfolios and interviews.
 
 ---
 
-*Made with ❤️ for the Freelance Community*
+# 🚀 Core Features
+
+## 🔐 Authentication & Security
+- User Registration & Login  
+- JWT-based authentication  
+- Secure password hashing using Bcrypt  
+- Protected routes  
+- Role-based access control (Client / Freelancer)
+- Prevent XSS in frontend using input validation and backend using helmet 
+---
+
+# 👤 Role-Based Dashboards
+
+The system provides different dashboards and permissions based on the logged-in user role.
+
+### 🧑‍💻 Freelancer Features
+- Create & update professional profile  
+- Upload resume  
+- Add skills and experience  
+- Browse available projects  
+- Search jobs  
+- Apply to projects  
+- View applied projects  
+- Track application status  
+
+### 🧑‍💼 Client Features
+- Create profile  
+- Post new projects  
+- Edit/Delete projects  
+- View applicants for each project  
+- Manage posted projects  
+- Select freelancers  
+
+---
+
+---
+
+# 🔒 Security Audit Checklist
+
+## Backend Security
+- CORS configuration verification  
+- JWT token expiration & secret strength  
+- Password hashing validation (bcrypt)  
+- Input validation on all routes  
+- MongoDB query safety  
+- Resume upload protection  
+- Rate limiting implementation  
+- Prevent sensitive data exposure in API responses  
+
+## Frontend Security
+- XSS prevention  
+- Secure token storage strategy  
+- Protected route validation  
+- API endpoint exposure review  
+- Proper use of environment variables  
+
+---
+
+# 🧠 Logic Audit Checklist
+
+## Authentication Flow
+- Login & Registration validation  
+- Profile completion enforcement  
+- Protected route logic verification  
+- Token handling consistency  
+
+## Data Flow
+- Profile creation saves correctly in database  
+- Project CRUD operations working properly  
+- Resume upload handling validation  
+- User data sync between frontend & backend  
+
+## Route Protection
+- Sensitive routes require authentication  
+- Profile completion required before job access  
+- Role-based access ready for future extension  
+
+---
+
+
+# 📁 Profile System
+- Profile completion required before accessing job features  
+- Stores:
+  - Skills  
+  - Experience  
+  - Resume  
+  - Personal details
+  - Video of self introduction
+- Profile data saved in MongoDB  
+
+---
+
+# 📦 Project Management
+- Clients can:
+  - Post projects  
+  - Manage project listings  
+
+- Freelancers can:
+  - Search projects  
+  - Apply to jobs  
+
+- Role-based project visibility implemented  
+
+---
+
+# 🔒 Route Protection
+Protected pages include:
+- Dashboard  
+- Profile  
+- Job listings  
+- Project posting  
+
+Access controlled using:
+- JWT authentication  
+- Role validation  
+
+---
+
+## 🔐 System Flow
+Authentication → Role Detection → Redirect to Role-Based Dashboard → Protected Feature Access
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+- React.js  
+- React Router DOM  
+- React Bootstrap  
+- Axios  
+
+## Backend
+- Node.js  
+- Express.js  
+- MongoDB & Mongoose  
+- JWT Authentication  
+- Bcrypt.js  
+- Multer (File Uploads)
+- Helmet (Prevent XSS) 
+---
+
+---
+
+# 💡 Future Enhancements
+- Payment integration  
+- Real-time chat system  
+---
+
+# 👩‍💻 Author
+**Thanusha**  
+Aspiring MERN Stack Developer  
+India  
+
+---
+
+
+
+
