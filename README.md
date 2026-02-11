@@ -12,6 +12,8 @@ A comprehensive MERN stack platform connecting freelancers with clients.
 - **🔐 User Authentication:** Secure signup and login for both Freelancers and Clients.
 - **📋 Freelancer Dashboard:** Browse projects, view details, and submit proposals.
 - **💼 Client Dashboard:** Post project listings and manage freelancer applications.
+- **🔔 Notification System:** Real-time unread badges and automated project assignment notifications.
+- **✅ Project Approval:** Workflow for clients to approve or reject applications.
 - **📱 Modern UI/UX:** Responsive design optimized for all devices.
 
 ## 🛠️ Tech Stack
