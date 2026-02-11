@@ -1,19 +1,22 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import useFetch from '../../../hooks/useFetch';
 
 const ProfileCard = () => {
-  const { data: user, loading } = useFetch("/api/users/me");
+  const { id } = useParams();
+  const fetchUrl = id ? `/api/users/${id}` : "/api/users/me";
+  const { data: user, loading } = useFetch(fetchUrl);
 
   const profileData = user ? {
-    image: "https://via.placeholder.com/150", 
+    image: "https://via.placeholder.com/150",
     name: user.name,
-    location: "Remote", 
+    location: "Remote",
     email: user.email,
     phone: "N/A",
     rating: 5,
     rate: user.hourlyRate ? `$${user.hourlyRate}/hr` : "Negotiable",
     summary: user.bio || "No summary provided.",
-    workHistory: user.experience?.[0] || {}, 
+    workHistory: user.experience?.[0] || {},
     education: user.education?.[0] || {},
     videoSrc: "https://www.w3schools.com/html/mov_bbb.mp4"
   } : null;
@@ -24,7 +27,7 @@ const ProfileCard = () => {
 
   return (
     <div className="mx-auto p-8 bg-white shadow-lg rounded-lg flex">
-      {}
+      { }
       <div className="w-1/3 pr-6 sticky top-8 h-screen">
         <img
           src={profileData.image}
@@ -61,7 +64,7 @@ const ProfileCard = () => {
         </button>
       </div>
 
-      {}
+      { }
       <div className="w-2/3 pl-6 overflow-y-auto">
         <h3 className="text-2xl font-bold text-orange-500 mb-4">
           Professional Summary

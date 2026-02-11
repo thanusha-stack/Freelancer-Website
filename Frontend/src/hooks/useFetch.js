@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
@@ -8,6 +8,7 @@ const useFetch = (url, options = {}) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [refreshKey, setRefreshKey] = useState(0);
     const { token } = useContext(AuthContext);
 
     useEffect(() => {
@@ -21,7 +22,7 @@ const useFetch = (url, options = {}) => {
                 };
 
                 if (token) {
-                    headers["Authorization"] = `Bearer ${token}`; 
+                    headers["Authorization"] = `Bearer ${token}`;
                 }
 
                 const res = await axios.get(`${API_BASE}${url}`, {
@@ -40,12 +41,13 @@ const useFetch = (url, options = {}) => {
         if (url) {
             fetchData();
         }
-    }, [url, token]); 
+    }, [url, token, refreshKey]);
 
-    const refetch = () => {
-    };
+    const refetch = useCallback(() => {
+        setRefreshKey(prev => prev + 1);
+    }, []);
 
-    return { data, loading, error };
+    return { data, loading, error, refetch };
 };
 
 export default useFetch;
