@@ -1,171 +1,159 @@
+import { useContext, useState, useEffect } from "react";
 import SubHeader from "../SubHeader/SubHeader";
+import axios from "axios";
+import { AuthContext } from "../../../context/AuthContext";
+import { Link } from "react-router-dom";
+import useFetch from "../../../hooks/useFetch";
 
 function ClientNotification() {
-  
-    return (
-    <div><SubHeader />
-        <div className="min-h-screen bg-gray-100">
-          <section className="max-w-4xl mx-auto p-6 sm:p-8 bg-white shadow-md rounded-lg mt-8">
-            <p className="text-2xl font-semibold text-gray-700 mb-4">Notifications</p>
-  
-            <div className="space-y-4">
-              {}
-              <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                <div className="flex-shrink-0 p-2 bg-blue-100 rounded-full">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    stroke="blue"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13 16h-1v-4h-1m1 4h.01M12 8h.01M21 12.2A9.2 9.2 0 113.8 12a9.2 9.2 0 0117.4.2z"
-                    />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-gray-700 font-medium">New Message</p>
-                  <p className="text-sm text-gray-500">You have a new message from the client.</p>
-                  <p className="text-xs text-gray-400 mt-1">10 mins ago</p>
-                </div>
-              </div>
-  
-              {}
-              <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                <div className="flex-shrink-0 p-2 bg-green-100 rounded-full">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    stroke="green"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12h6m2 0a8 8 0 11-16 0 8 8 0 0116 0z"
-                    />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-gray-700 font-medium">Job Application Approved</p>
-                  <p className="text-sm text-gray-500">Your application for 'Graphic Designer' was approved.</p>
-                  <p className="text-xs text-gray-400 mt-1">1 hour ago</p>
-                </div>
-              </div>
-  
-              {}
-              <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                <div className="flex-shrink-0 p-2 bg-red-100 rounded-full">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    stroke="red"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M18.364 5.636l-12.728 12.728m0-12.728l12.728 12.728"
-                    />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-gray-700 font-medium">Payment Failed</p>
-                  <p className="text-sm text-gray-500">We couldn’t process your payment. Please try again.</p>
-                  <p className="text-xs text-gray-400 mt-1">3 hours ago</p>
-                </div>
-              </div>
+  const { token } = useContext(AuthContext);
+  const { data: notifications, loading, refetch } = useFetch("/api/notifications");
+  const [actionLoading, setActionLoading] = useState(null);
 
-              {}
-              <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                <div className="flex-shrink-0 p-2 bg-yellow-100 rounded-full">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    stroke="orange"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 8v4l2 2m4-2a8 8 0 11-16 0 8 8 0 0116 0z"
-                    />
-                  </svg>
+  const handleAction = async (notificationId, applicationId, action) => {
+    setActionLoading(notificationId);
+    try {
+      await axios.patch(
+        `${import.meta.env.VITE_API_URL}/api/applications/${applicationId}/${action}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Mark notification as read
+      await axios.patch(
+        `${import.meta.env.VITE_API_URL}/api/notifications/${notificationId}/read`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      alert(`Application ${action === 'approve' ? 'approved' : 'rejected'} successfully!`);
+      refetch(); // Refresh notifications
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || `Failed to ${action} application`);
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const markAsRead = async (id) => {
+    try {
+      await axios.patch(
+        `${import.meta.env.VITE_API_URL}/api/notifications/${id}/read`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      refetch();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <div>
+      <SubHeader />
+      <div className="min-h-screen bg-gray-100 py-8">
+        <section className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-semibold text-gray-700">Notifications</h1>
+            {notifications?.length > 0 && (
+              <button
+                onClick={async () => {
+                  await axios.patch(`${import.meta.env.VITE_API_URL}/api/notifications/read-all`, {}, { headers: { Authorization: `Bearer ${token}` } });
+                  refetch();
+                }}
+                className="text-orange-500 hover:underline text-sm font-medium"
+              >
+                Mark all as read
+              </button>
+            )}
+          </div>
+
+          <div className="space-y-4">
+            {loading ? (
+              <p className="text-center text-gray-500 py-10">Loading notifications...</p>
+            ) : notifications?.length === 0 ? (
+              <p className="text-center text-gray-500 py-10">No notifications yet.</p>
+            ) : (
+              notifications.map((notif) => (
+                <div
+                  key={notif._id}
+                  className={`flex flex-col p-4 border rounded-lg transition-all ${notif.isRead ? "bg-white border-gray-200" : "bg-orange-50 border-orange-200"
+                    }`}
+                >
+                  <div className="flex items-start">
+                    <div className={`flex-shrink-0 p-2 rounded-full ${notif.type === "application_received" ? "bg-blue-100" : "bg-gray-100"
+                      }`}>
+                      {notif.type === "application_received" ? (
+                        <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1 4h.01M12 8h.01M21 12.2A9.2 9.2 0 113.8 12a9.2 9.2 0 0117.4.2z" />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="ml-4 flex-grow">
+                      <div className="flex justify-between">
+                        <p className={`font-medium ${notif.isRead ? "text-gray-700" : "text-gray-900"}`}>
+                          {notif.message}
+                        </p>
+                        <span className="text-xs text-gray-400">
+                          {new Date(notif.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+
+                      {notif.type === "application_received" && notif.applicationId?.status === "Pending" && (
+                        <div className="mt-4 flex flex-wrap gap-3">
+                          <Link
+                            to={`/FLViewProfile/${notif.senderId._id}`}
+                            className="text-sm font-medium text-blue-600 hover:underline"
+                          >
+                            View Freelancer Profile
+                          </Link>
+                          <button
+                            disabled={actionLoading === notif._id}
+                            onClick={() => handleAction(notif._id, notif.applicationId._id, 'approve')}
+                            className="px-4 py-1.5 bg-green-500 text-white text-sm rounded hover:bg-green-600 disabled:bg-gray-400 transition-colors"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            disabled={actionLoading === notif._id}
+                            onClick={() => handleAction(notif._id, notif.applicationId._id, 'reject')}
+                            className="px-4 py-1.5 bg-red-500 text-white text-sm rounded hover:bg-red-600 disabled:bg-gray-400 transition-colors"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      )}
+
+                      {notif.type === "application_received" && notif.applicationId?.status !== "Pending" && (
+                        <p className="mt-2 text-sm italic text-gray-500">
+                          Status: {notif.applicationId.status}
+                        </p>
+                      )}
+
+                      {!notif.isRead && (
+                        <button
+                          onClick={() => markAsRead(notif._id)}
+                          className="mt-2 text-xs text-gray-500 hover:text-orange-500"
+                        >
+                          Mark as read
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className="ml-4">
-                  <p className="text-gray-700 font-medium">Reminder</p>
-                  <p className="text-sm text-gray-500">Don't forget to submit your timesheet for this week.</p>
-                  <p className="text-xs text-gray-400 mt-1">2 hours ago</p>
-                </div>
-              </div>
-  
-              {}
-              <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                <div className="flex-shrink-0 p-2 bg-purple-100 rounded-full">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    stroke="purple"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13 16h-1v-4h-1m1 4h.01M12 8h.01M21 12.2A9.2 9.2 0 113.8 12a9.2 9.2 0 0117.4.2z"
-                    />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-gray-700 font-medium">New Project Invitation</p>
-                  <p className="text-sm text-gray-500">You've been invited to join the 'Mobile App Redesign' project.</p>
-                  <p className="text-xs text-gray-400 mt-1">1 day ago</p>
-                </div>
-              </div>
-  
-              {}
-              <div className="flex items-start p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                <div className="flex-shrink-0 p-2 bg-teal-100 rounded-full">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    stroke="teal"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M8 9l3-3 3 3m0 6l-3 3-3-3"
-                    />
-                  </svg>
-                </div>
-                <div className="ml-4">
-                  <p className="text-gray-700 font-medium">System Update</p>
-                  <p className="text-sm text-gray-500">
-                    Our platform will undergo maintenance from 12 AM to 2 AM UTC.
-                  </p>
-                  <p className="text-xs text-gray-400 mt-1">3 days ago</p>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
+              ))
+            )}
+          </div>
+        </section>
+      </div>
     </div>
-    );
-  }
-  
-  export default ClientNotification;
-  
+  );
+}
+
+export default ClientNotification;
+

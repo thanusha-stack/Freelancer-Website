@@ -10,10 +10,22 @@ import { useContext } from "react";
 function ClientViewProjects() {
   const { user } = useContext(AuthContext);
   const { data: projects, loading: projectsLoading } = useFetch("/api/projects");
-  const { data: freelancers, loading: freelancersLoading } = useFetch("/api/users?role=freelancer");
+  const { data: applications, loading: applicationsLoading } = useFetch("/api/applications");
 
   const projectList = projects || [];
-  const freelancerList = freelancers || [];
+
+  // Extract unique freelancers who applied to this client's projects
+  const applicantList = [];
+  const seenIds = new Set();
+  (applications || []).forEach((app) => {
+    if (app.freelancerId && !seenIds.has(app.freelancerId._id)) {
+      seenIds.add(app.freelancerId._id);
+      applicantList.push({
+        name: app.freelancerId.name || "Unknown",
+        email: app.freelancerId.email || "No Email",
+      });
+    }
+  });
 
   return (
     <div>
@@ -89,18 +101,20 @@ function ClientViewProjects() {
 
             { }
             <div className="mt-0 mx-16">
-              <h3 className="font-bold text-orange-500">Freelancers</h3>
+              <h3 className="font-bold text-orange-500">Applicants</h3>
               <div className="border mt-2 px-3 pb-5 rounded-lg max-h-60 overflow-y-auto">
                 <ul className="space-y-2">
-                  {freelancersLoading ? (
+                  {applicationsLoading ? (
                     <li className="text-center mt-4">Loading...</li>
-                  ) : (
-                    freelancerList.map((freelancer, index) => (
-                      <li key={freelancer._id || index} className="flex text-gray-500 justify-between mt-8">
-                        <span>{freelancer.name}</span>
-                        <span>{freelancer.email}</span>
+                  ) : applicantList.length > 0 ? (
+                    applicantList.map((applicant, index) => (
+                      <li key={index} className="flex text-gray-500 justify-between mt-8">
+                        <span>{applicant.name}</span>
+                        <span>{applicant.email}</span>
                       </li>
                     ))
+                  ) : (
+                    <li className="text-center mt-4 text-gray-400">No applicants yet.</li>
                   )}
                 </ul>
               </div>
@@ -128,3 +142,4 @@ function ClientViewProjects() {
 }
 
 export default ClientViewProjects;
+

@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [isProfileComplete, setIsProfileComplete] = useState(localStorage.getItem("isProfileComplete") === "true");
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Sync profile status from server on mount
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
           setToken(storedToken);
           setRole(serverRole);
           setIsProfileComplete(serverProfileStatus);
+          setUser(response.data);
         } catch (error) {
           console.error("Failed to sync profile status:", error);
           // If token is invalid, clear everything
@@ -41,6 +43,7 @@ export const AuthProvider = ({ children }) => {
             setToken(null);
             setRole(null);
             setIsProfileComplete(false);
+            setUser(null);
           } else {
             // Fallback to localStorage values if network error
             const storedRole = localStorage.getItem("role");
@@ -76,6 +79,7 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setRole(null);
     setIsProfileComplete(false);
+    setUser(null);
   };
 
   // Function to refresh profile status (call after profile update)
@@ -95,7 +99,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, role, isProfileComplete, login, logout, refreshProfileStatus, loading }}>
+    <AuthContext.Provider value={{ token, role, user, isProfileComplete, login, logout, refreshProfileStatus, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );

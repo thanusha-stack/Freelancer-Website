@@ -6,8 +6,9 @@ import FLSubHeader from '../../pages/Freelancer/Subheader/Subheader';
 const JobsListPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("");
-  const { data: jobsList, loading } = useFetch("/api/projects?status=Pending");
-  const jobs = jobsList || [];
+  const { data: jobsList, loading } = useFetch("/api/projects/browse");
+  const jobs = jobsList || [];
+
   const filteredJobs = jobs.filter(job =>
     job.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
     (!filter || (job.task && job.task.includes(filter)))
@@ -19,7 +20,7 @@ const JobsListPage = () => {
       <section className="mx-10">
         <div className="text-3xl py-5">Explore Available Jobs</div>
 
-        {}
+        { }
         <div className="flex gap-4 mb-6">
           <input
             type="text"
@@ -42,7 +43,7 @@ const JobsListPage = () => {
           </select>
         </div>
 
-        {}
+        { }
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredJobs.map((job, index) => (
             <JobsCard key={index} {...job} />

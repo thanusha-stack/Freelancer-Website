@@ -4,21 +4,77 @@ const Project = require("../models/Project");
 const authMiddleware = require("../middleware/auth"); // We will create this middleware file
 const sanitize = require("../utils/sanitize");
 
-// GET /api/projects - Get all projects (filtered by user role)
+// GET /api/projects/browse - Browse all available (Pending) projects
+// This is public for all authenticated users to find jobs to apply for
+router.get("/browse", authMiddleware, async (req, res) => {
+    try {
+        const { status } = req.query;
+        const query = { status: status || "Pending" };
+
+        const projects = await Project.find(query)
+            .populate("clientId", "name email companyName")
+            .sort({ createdAt: -1 });
+        res.json(projects);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// GET /api/projects - Get user's own projects (filtered by role)
 router.get("/", authMiddleware, async (req, res) => {
     try {
         const { role, id } = req.user;
+        const { status } = req.query;
         let query = {};
 
         if (role === "client") {
             query.clientId = id;
         } else if (role === "freelancer") {
-            // Freelancers might see all open projects OR projects assigned to them
-            // For now, let's show projects assigned to them OR open projects
-            query.$or = [{ freelancerId: id }, { status: "Pending" }];
+            // Only show projects explicitly assigned to this freelancer
+            query.freelancerId = id;
+        }
+        // Admin sees all (no filter)
+
+        // Optional status filter
+        if (status) {
+            query.status = status;
         }
 
         const projects = await Project.find(query).populate("clientId", "name email");
+        res.json(projects);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// GET /api/projects/my-applied - Get projects the freelancer has applied for
+const Application = require("../models/Application");
+
+router.get("/my-applied", authMiddleware, async (req, res) => {
+    try {
+        if (req.user.role !== "freelancer") {
+            return res.status(403).json({ message: "Only freelancers can access this endpoint" });
+        }
+
+        // Find all applications by this freelancer
+        const applications = await Application.find({ freelancerId: req.user.id })
+            .populate({
+                path: "projectId",
+                populate: {
+                    path: "clientId",
+                    select: "name email"
+                }
+            });
+
+        // Extract the project data from each application, include application status
+        const projects = applications
+            .filter(app => app.projectId) // Filter out any with deleted projects
+            .map(app => ({
+                ...app.projectId.toObject(),
+                applicationStatus: app.status,
+                applicationId: app._id
+            }));
+
         res.json(projects);
     } catch (err) {
         res.status(500).json({ message: err.message });

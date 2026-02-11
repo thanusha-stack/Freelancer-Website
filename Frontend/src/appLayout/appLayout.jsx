@@ -59,7 +59,7 @@ function App() {
           <Route path="/Support" element={<Support />} />
           <Route path="/LiveChat" element={<LiveChat />} />
           <Route path="/Login" element={<Login />} />
-          <Route path="/SignUp" element={<Login />} /> {}
+          <Route path="/SignUp" element={<Login />} /> { }
 
           <Route path="/FreelancerPage" element={
             <ProtectedRoutes>
@@ -67,12 +67,24 @@ function App() {
             </ProtectedRoutes>
           } />
 
-          <Route path="/ViewProjects" element={<ViewProjects />} />
+          <Route path="/ViewProjects" element={
+            <ProtectedRoutes>
+              <ViewProjects />
+            </ProtectedRoutes>
+          } />
           <Route path="/FLViewProfile" element={
             <ProtectedRoutes>
               <FLViewProfile />
             </ProtectedRoutes>} />
-          <Route path="/ClientViewProjects" element={<ClientViewProjects />} />
+          <Route path="/FLViewProfile/:id" element={
+            <ProtectedRoutes>
+              <FLViewProfile />
+            </ProtectedRoutes>} />
+          <Route path="/ClientViewProjects" element={
+            <ProtectedRoutes>
+              <ClientViewProjects />
+            </ProtectedRoutes>
+          } />
           <Route path="/JobDescription" element={<JobDescription />} />
           <Route path="/SubHeader" element={<SubHeader />} />
           <Route path="/CLNotifyBell" element={<CLNotifyBell />} />

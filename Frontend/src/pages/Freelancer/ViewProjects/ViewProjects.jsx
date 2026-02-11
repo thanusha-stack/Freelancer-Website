@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import profile from "../../../assets/images/profile.svg"; 
+import profile from "../../../assets/images/profile.svg";
 import NewTask from "../../../assets/images/NewTask.svg";
 import { Link } from "react-router-dom";
 import FLSubHeader from "../Subheader/Subheader";
@@ -10,7 +10,7 @@ function ViewProjects() {
   const { token } = useContext(AuthContext);
   const [projects, setProjects] = useState([]);
   const [clients, setClients] = useState([]);
-  const [user, setUser] = useState({ name: "Freelancer" }); 
+  const [user, setUser] = useState({ name: "Freelancer" });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,12 +18,13 @@ function ViewProjects() {
       try {
         const config = {
           headers: { Authorization: `Bearer ${token}` },
-        };
+        };
         const userRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/me`, config);
-        setUser(userRes.data);
-        const projectsRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/projects`, config);
+        setUser(userRes.data);
+        // Fetch only projects this freelancer has applied to
+        const projectsRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/projects/my-applied`, config);
         const fetchedProjects = projectsRes.data;
-        setProjects(fetchedProjects);
+        setProjects(fetchedProjects);
         const uniqueClients = [];
         const clientIds = new Set();
 
@@ -65,9 +66,9 @@ function ViewProjects() {
       <section className="bg-white p-5">
 
         <div className="flex flex-col md:flex-row">
-          {}
+          { }
           <div className="w-full lg:w-1/2">
-            {}
+            { }
             <ul className="flex lg:align-center gap-5 md:space-x-12 p-5 overflow-x-auto">
               <li className="border shadow-[0_3px_10px_rgb(0,0,0,0.2)] space-x-7 px-10 py-10 bg-blue-500 text-sm text-white font-bold rounded-lg">
                 All Projects ({projects.length})
@@ -80,14 +81,14 @@ function ViewProjects() {
               </li>
             </ul>
 
-            {}
+            { }
             <ul className="flex px-10 py-4 justify-between">
               <li className="w-1/3 text-center text-gray-600 font-bold ">Project</li>
               <li className="w-1/3 text-center text-gray-600 font-bold">Task</li>
               <li className="w-1/3 text-center text-gray-600 font-bold">Status</li>
             </ul>
 
-            {}
+            { }
             <div className="space-y-3">
               {projects.length > 0 ? (
                 projects.map((project, index) => (
@@ -112,7 +113,7 @@ function ViewProjects() {
             </div>
 
           </div>
-          {}
+          { }
           <div className="w-full lg:w-1/2 px-5">
             <div className="flex  flex-col items-center">
               <img src={profile} alt="Profile" className="rounded-full" height="60" width="60" />
@@ -121,7 +122,7 @@ function ViewProjects() {
                 <button className="text-orange-500 hover:underline">View Profile </button></div>
             </div>
 
-            {}
+            { }
             <div className="mt-0 mx-16">
               <h3 className="font-bold text-orange-500">Clients</h3>
               <div className="border mt-2 px-3 pb-5 rounded-lg max-h-60 overflow-y-auto">
@@ -140,7 +141,7 @@ function ViewProjects() {
               </div>
             </div>
 
-            {}
+            { }
             <div className="mt-5 mx-16">
               <h3 className="font-bold text-orange-500">Task</h3>
               <div className="flex flex-col items-center justify-center h-full mt-2">
