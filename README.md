@@ -71,11 +71,20 @@ The system provides different dashboards and permissions based on the logged-in 
 - Protected route logic verification  
 - Token handling consistency  
 
+ feat/notifications-system
+- **🔐 User Authentication:** Secure signup and login for both Freelancers and Clients.
+- **📋 Freelancer Dashboard:** Browse projects, view details, and submit proposals.
+- **💼 Client Dashboard:** Post project listings and manage freelancer applications.
+- **🔔 Notification System:** Real-time unread badges and automated project assignment notifications.
+- **✅ Project Approval:** Workflow for clients to approve or reject applications.
+- **📱 Modern UI/UX:** Responsive design optimized for all devices.
+
 ## Data Flow
 - Profile creation saves correctly in database  
 - Project CRUD operations working properly  
 - Resume upload handling validation  
 - User data sync between frontend & backend  
+
 
 ## Route Protection
 - Sensitive routes require authentication  
