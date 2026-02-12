@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [isProfileComplete, setIsProfileComplete] = useState(localStorage.getItem("isProfileComplete") === "true");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [loading, setLoading] = useState(true);
 
   // Sync profile status from server on mount
@@ -24,15 +24,17 @@ export const AuthProvider = ({ children }) => {
 
           const serverProfileStatus = response.data.isProfileComplete;
           const serverRole = response.data.role;
+          const serverUser = response.data;
 
           // Update localStorage and state with server values
           localStorage.setItem("isProfileComplete", serverProfileStatus);
           localStorage.setItem("role", serverRole);
+          localStorage.setItem("user", JSON.stringify(serverUser));
 
           setToken(storedToken);
           setRole(serverRole);
           setIsProfileComplete(serverProfileStatus);
-          setUser(response.data);
+          setUser(serverUser);
         } catch (error) {
           console.error("Failed to sync profile status:", error);
           // If token is invalid, clear everything
@@ -40,6 +42,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem("token");
             localStorage.removeItem("role");
             localStorage.removeItem("isProfileComplete");
+            localStorage.removeItem("user");
             setToken(null);
             setRole(null);
             setIsProfileComplete(false);
@@ -61,20 +64,23 @@ export const AuthProvider = ({ children }) => {
     syncProfileStatus();
   }, []);
 
-  const login = (newToken, newRole, newProfileStatus) => {
+  const login = (newToken, newUser) => {
     localStorage.setItem("token", newToken);
-    localStorage.setItem("role", newRole);
-    localStorage.setItem("isProfileComplete", newProfileStatus);
+    localStorage.setItem("role", newUser.role);
+    localStorage.setItem("isProfileComplete", newUser.isProfileComplete);
+    localStorage.setItem("user", JSON.stringify(newUser));
 
     setToken(newToken);
-    setRole(newRole);
-    setIsProfileComplete(newProfileStatus);
+    setRole(newUser.role);
+    setIsProfileComplete(newUser.isProfileComplete);
+    setUser(newUser);
   };
 
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("isProfileComplete");
+    localStorage.removeItem("user");
 
     setToken(null);
     setRole(null);

@@ -5,7 +5,7 @@ import axios from "axios";
 import { AuthContext } from "../../../context/AuthContext";
 
 function ClientProfile() {
-  const { token, refreshProfileStatus } = useContext(AuthContext);
+  const { token, user, refreshProfileStatus } = useContext(AuthContext);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [profileData, setProfileData] = useState({
@@ -19,6 +19,13 @@ function ClientProfile() {
     industry: "Technology",
     description: "",
   });
+
+  // Pre-fill name from auth user
+  React.useEffect(() => {
+    if (user && user.name) {
+      setProfileData(prev => ({ ...prev, name: user.name }));
+    }
+  }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
