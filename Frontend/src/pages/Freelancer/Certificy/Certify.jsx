@@ -4,7 +4,7 @@ import axios from 'axios';
 import { AuthContext } from "../../../context/AuthContext";
 
 function Certify() {
-  const { token, refreshProfileStatus } = useContext(AuthContext);
+  const { token, user, refreshProfileStatus } = useContext(AuthContext);
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     name: '',
@@ -19,6 +19,13 @@ function Certify() {
     dob: '',
     resume: '',
   });
+
+  // Pre-fill name from auth user
+  React.useEffect(() => {
+    if (user && user.name) {
+      setProfileData(prev => ({ ...prev, name: user.name }));
+    }
+  }, [user]);
 
   const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState("");

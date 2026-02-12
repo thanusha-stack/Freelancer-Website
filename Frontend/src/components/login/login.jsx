@@ -66,15 +66,15 @@ function Login() {
       // If user logs in as Client but came from Freelancer link, maybe warn?
       // For now, let's just log them in as whatever they are.
 
-      login(res.data.token, res.data.role, res.data.isProfileComplete);
+      login(res.data.token, res.data.user);
 
       // Check if user has completed profile
-      if (res.data.isProfileComplete) {
-        if (res.data.role === "freelancer") navigate("/FLDashboard", { replace: true });
-        else if (res.data.role === "client") navigate("/ClientDashboard", { replace: true });
+      if (res.data.user.isProfileComplete) {
+        if (res.data.user.role === "freelancer") navigate("/FLDashboard", { replace: true });
+        else if (res.data.user.role === "client") navigate("/ClientDashboard", { replace: true });
       } else {
-        if (res.data.role === "freelancer") navigate("/Certify", { replace: true });
-        else if (res.data.role === "client") navigate("/ClientProfile", { replace: true });
+        if (res.data.user.role === "freelancer") navigate("/Certify", { replace: true });
+        else if (res.data.user.role === "client") navigate("/ClientProfile", { replace: true });
       }
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
@@ -89,15 +89,15 @@ function Login() {
         role: roleFromURL || "freelancer"
       });
 
-      login(res.data.token, res.data.role, res.data.isProfileComplete);
+      login(res.data.token, res.data.user);
 
       // Navigate depending on profile completion
-      if (res.data.isProfileComplete) {
-        if (res.data.role === "freelancer") navigate("/FLDashboard", { replace: true });
-        else if (res.data.role === "client") navigate("/ClientDashboard", { replace: true });
+      if (res.data.user.isProfileComplete) {
+        if (res.data.user.role === "freelancer") navigate("/FLDashboard", { replace: true });
+        else if (res.data.user.role === "client") navigate("/ClientDashboard", { replace: true });
       } else {
-        if (res.data.role === "freelancer") navigate("/Certify", { replace: true });
-        else if (res.data.role === "client") navigate("/ClientProfile", { replace: true });
+        if (res.data.user.role === "freelancer") navigate("/Certify", { replace: true });
+        else if (res.data.user.role === "client") navigate("/ClientProfile", { replace: true });
       }
     } catch (err) {
       alert(err.response?.data?.message || "Google login failed");
