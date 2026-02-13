@@ -9,9 +9,9 @@ const FloatBar = () => {
                     <div className="absolute inset-0 w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
                 </div>
                 <div className="flex flex-col md:flex-row md:items-center md:space-x-2">
-                    <span className="text-[10px] uppercase tracking-widest text-emerald-400 font-bold">Author</span>
+                    <span className="text-[10px] uppercase tracking-widest text-white font-bold">Author</span>
                     <span className="text-sm font-semibold text-white">
-                        THANUSHA A <span className="text-emerald-400 font-bold ml-1">(7376231CS332)</span>
+                        THANUSHA A <span className="text-white font-bold ml-1">(7376231CS332)</span>
                     </span>
                 </div>
             </div>
