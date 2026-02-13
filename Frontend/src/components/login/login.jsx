@@ -100,7 +100,8 @@ function Login() {
         else if (res.data.user.role === "client") navigate("/ClientProfile", { replace: true });
       }
     } catch (err) {
-      alert(err.response?.data?.message || "Google login failed");
+      console.error("Google Login Failed (Backend)", err);
+      alert(`Google Login Failed (Backend): ${err.response?.data?.message || err.message}`);
     }
   };
 
@@ -184,7 +185,10 @@ function Login() {
         <div className="flex justify-center">
           <GoogleLogin
             onSuccess={googleLogin}
-            onError={() => alert("Google Login Failed")}
+            onError={() => {
+              console.error("Google Login Failed (Client-side)");
+              alert("Google Login Failed (Client-side). Check console for details.");
+            }}
           />
         </div>
       </div>

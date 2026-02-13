@@ -7,7 +7,9 @@ const helmet = require("helmet");
 
 const app = express();
 
-app.use(helmet());
+app.use(helmet({
+  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+}));
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -15,7 +17,7 @@ app.use(
       scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       imgSrc: ["'self'", "data:", "blob:"],
-      connectSrc: ["'self'", "http://localhost:5000", "http://localhost:5173"],
+      connectSrc: ["'self'", "http://localhost:5000", "https://hireelite.onrender.com", "http://localhost:5173"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
