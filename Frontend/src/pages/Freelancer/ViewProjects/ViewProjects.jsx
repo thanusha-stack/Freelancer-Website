@@ -123,7 +123,7 @@ function ViewProjects() {
             </div>
 
             { }
-            <div className="mt-0 mx-16">
+            <div className="mt-0 mx-4 sm:mx-16">
               <h3 className="font-bold text-orange-500">Clients</h3>
               <div className="border mt-2 px-3 pb-5 rounded-lg max-h-60 overflow-y-auto">
                 {clients.length > 0 ? (
@@ -142,7 +142,7 @@ function ViewProjects() {
             </div>
 
             { }
-            <div className="mt-5 mx-16">
+            <div className="mt-5 mx-4 sm:mx-16">
               <h3 className="font-bold text-orange-500">Task</h3>
               <div className="flex flex-col items-center justify-center h-full mt-2">
                 <div className="border border rounded-lg px-4 py-2 flex flex-col items-center gap-4">

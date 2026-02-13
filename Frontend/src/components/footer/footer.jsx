@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
     <div>
-      <footer className="bg-gradient-to-r from-orange-500 to-orange-300 text-white pl-8 py-10 mt-10">
-        <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-          {}
+      <footer className="bg-gradient-to-r from-orange-500 to-orange-300 text-white px-4 md:px-8 py-10 mt-10">
+        <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          { }
           <div>
             <h3 className="font-semibold mb-4">For Clients</h3>
             <ul>
@@ -18,7 +18,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {}
+          { }
           <div>
             <h3 className="font-semibold mb-4">For Talent</h3>
             <ul>
@@ -29,7 +29,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {}
+          { }
           <div>
             <h3 className="font-semibold mb-4">Resources</h3>
             <ul>
@@ -40,7 +40,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {}
+          { }
           <div>
             <h3 className="font-semibold mb-4">Company</h3>
             <ul>
@@ -53,7 +53,7 @@ const Footer = () => {
 
         </div>
 
-        {}
+        { }
         <div className="container mx-auto mt-10 flex justify-between items-center">
           <div className="text-white-400">
             <p>Follow us</p>
@@ -64,13 +64,13 @@ const Footer = () => {
               <Link to="#" className="text-white"><i className="fab fa-instagram"></i></Link>
             </div>
           </div>
-         
+
         </div>
       </footer>
       <div className='bg-gradient-to-r from-orange-500 to-orange-300' >
-      <div className='border p-0'></div>
+        <div className='border p-0'></div>
         <p className='mt-2 p-2 text-white'>&copy; {new Date().getFullYear()} HireElite. All rights reserved.</p>
-     </div>
+      </div>
     </div>
   );
 }
