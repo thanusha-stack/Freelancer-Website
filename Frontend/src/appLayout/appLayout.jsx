@@ -1,5 +1,6 @@
 import Navbar from '../components/navbar/navbar';
 import Footer from '../components/footer/footer';
+import FloatBar from '../components/FloatBar/FloatBar';
 import MainDashboard from '../pages/MainDashboard';
 import FLHome from '../pages/Freelancer/home/home';
 import FLDashboard from '../pages/Freelancer/Dashboard/Dashboard';
@@ -103,6 +104,7 @@ function App() {
           <Route path="/footer" element={<Footer />} />
         </Routes>
       </div>
+      <FloatBar />
     </>
   );
 }

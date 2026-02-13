@@ -25,8 +25,8 @@ function Dashboard() {
             <div>
               <p className="text-gray-500 text-1xl">Trusted by</p>
               <div className="flex space-x-8 pt-7">
-                <a href="https://mysore-tourism.onrender.com" target="_blank" rel="noopener noreferrer">
-                  <img src={twitterLogo} alt="Mysore Tourism" className="h-10 w-auto hover:opacity-80 transition-opacity" />
+                <a href="https://travora-trip.onrender.com" target="_blank" rel="noopener noreferrer">
+                  <img src={twitterLogo} alt="Travora Trip" className="h-10 w-auto hover:opacity-80 transition-opacity" />
                 </a>
               </div>
             </div>
