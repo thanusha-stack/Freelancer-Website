@@ -2,11 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require("cors");
+const compression = require("compression");
 
 const helmet = require("helmet");
 
 const app = express();
 
+app.use(compression());
 app.use(helmet({
   crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
 }));
