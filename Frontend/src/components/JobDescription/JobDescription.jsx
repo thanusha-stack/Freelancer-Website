@@ -1,7 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import bg from "../../assets/images/bg.jpg";
 import Programmer from "../../assets/images/Programmer.svg";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -138,10 +136,9 @@ function JobDescription() {
 
   return (
     <section
-      className="min-h-screen flex items-center justify-center bg-cover bg-center py-10"
-      style={{ backgroundImage: `url(${bg})` }}
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-orange-100 py-10"
     >
-      <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-2xl">
         <h1 className="text-3xl font-bold mb-4">{job.name}</h1>
         <div className="flex justify-between items-center mb-6">
           <div>

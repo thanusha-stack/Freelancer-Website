@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo1 from '../assets/images/google.jpeg';
-import logo2 from '../assets/images/trust.png';
 import twitterLogo from '../assets/images/twitter.svg';
 import WebsiteDeveloper from '../assets/images/WebsiteDeveloper.svg';
 
