@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 
+const API = import.meta.env.VITE_API_URL || "https://freelancer-website-api.onrender.com";
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -18,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       if (storedToken) {
         try {
           // Fetch latest user data from server
-          const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/me`, {
+          const response = await axios.get(`${API}/api/users/me`, {
             headers: { Authorization: `Bearer ${storedToken}` }
           });
 
@@ -92,7 +94,7 @@ export const AuthProvider = ({ children }) => {
   const refreshProfileStatus = async () => {
     if (token) {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/me`, {
+        const response = await axios.get(`${API}/api/users/me`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const serverProfileStatus = response.data.isProfileComplete;
