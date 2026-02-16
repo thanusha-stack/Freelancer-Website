@@ -19,6 +19,7 @@ function ClientProfile() {
     industry: "Technology",
     description: "",
   });
+  const [selectedFile, setSelectedFile] = useState(null);
 
   // Pre-fill name from auth user
   React.useEffect(() => {
@@ -35,25 +36,25 @@ function ClientProfile() {
     }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfileData((prevData) => ({
-        ...prevData,
-        profilePicture: file.name,
-      }));
-    }
-  };
-
-  const triggerFileSelect = () => {
-    fileInputRef.current.click();
+  const handleFileChange = (file) => {
+    setSelectedFile(file);
   };
 
   const handleSaveProfile = async () => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/profile`, profileData, {
+      const formData = new FormData();
+      Object.keys(profileData).forEach(key => {
+        formData.append(key, profileData[key]);
+      });
+
+      if (selectedFile) {
+        formData.append("resume", selectedFile);
+      }
+
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/profile`, formData, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data"
         }
       });
 
@@ -76,7 +77,7 @@ function ClientProfile() {
         <p className="text-2xl font-semibold text-gray-700 mb-6">Create Profile</p>
 
         <div className="mb-6">
-          <Profile />
+          <Profile onImageSelect={handleFileChange} />
           <p className="text-center text-gray-500">Click Logo to upload your profile</p>
         </div>
 
