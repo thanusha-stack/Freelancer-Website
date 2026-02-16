@@ -8,6 +8,7 @@ const API = import.meta.env.VITE_API_URL || "https://freelancer-website-api.onre
 function ClientProfile() {
   const { token, user, refreshProfileStatus } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const [profileData, setProfileData] = useState({
     name: "",
     companyName: "",
@@ -22,6 +23,7 @@ function ClientProfile() {
 
   // Pre-fill name from auth user
   React.useEffect(() => {
+    console.log("ClientProfile loaded. User:", user);
     if (user && user.name) {
       setProfileData(prev => ({ ...prev, name: user.name }));
     }
@@ -36,26 +38,30 @@ function ClientProfile() {
   };
 
   const handleSaveProfile = async () => {
-    alert("Saving Profile...");
-    console.log("Attempting to save profile...");
-    console.log("API URL:", API);
-    console.log("Profile Data:", profileData);
+    alert(`Debug: Attempting save for ${profileData.name} to ${API}`);
+
+    if (!token) {
+      alert("Error: No authentication token found. Please try logging in again.");
+      return;
+    }
 
     try {
       const response = await axios.put(`${API}/api/users/profile`, profileData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
         }
       });
 
       console.log("Profile update response:", response.data);
       await refreshProfileStatus();
 
-      alert("Profile Updated Successfully!");
+      alert("Success: Profile Updated Successfully!");
       navigate("/ClientDashboard");
     } catch (err) {
       console.error("Profile update error:", err);
-      alert(err.response?.data?.message || "Failed to update profile");
+      const errMsg = err.response?.data?.message || err.message || "Unknown server error";
+      alert("Fail: Error saving profile - " + errMsg);
     }
   };
 
