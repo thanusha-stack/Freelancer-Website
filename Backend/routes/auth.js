@@ -39,11 +39,16 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, role } = req.body;
 
         const user = await User.findOne({ email });
         if (!user)
             return res.status(404).json({ message: "Email not found" });
+
+        // Strict Role Enforcement
+        if (role && user.role !== role) {
+            return res.status(403).json({ message: `Access denied. Your account is registered as a ${user.role}.` });
+        }
 
         if (!user.password)
             return res.status(400).json({ message: "Use Google Login" });
@@ -84,7 +89,12 @@ router.post("/google-login", async (req, res) => {
 
         let user = await User.findOne({ email });
 
-        if (!user) {
+        if (user) {
+            // Strict Role Enforcement for existing users
+            if (role && user.role !== role) {
+                return res.status(403).json({ message: `Access denied. Your account is registered as a ${user.role}.` });
+            }
+        } else {
             const allowedRoles = ["client", "freelancer"];
             const userRole = allowedRoles.includes(role) ? role : "client";
 

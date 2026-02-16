@@ -59,7 +59,8 @@ function Login() {
     try {
       const res = await axios.post(`${API}/login`, {
         email: form.email,
-        password: form.password
+        password: form.password,
+        role: form.role
       });
 
       // Role mismatch protection (optional, depends on requirement)
