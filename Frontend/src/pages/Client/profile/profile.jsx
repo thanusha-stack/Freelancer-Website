@@ -1,5 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
-import Profile from "../../Freelancer/Certificy/profile/Profile";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../context/AuthContext";
@@ -7,7 +6,6 @@ import { AuthContext } from "../../../context/AuthContext";
 function ClientProfile() {
   const { token, user, refreshProfileStatus } = useContext(AuthContext);
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
   const [profileData, setProfileData] = useState({
     name: "",
     companyName: "",
@@ -19,7 +17,6 @@ function ClientProfile() {
     industry: "Technology",
     description: "",
   });
-  const [selectedFile, setSelectedFile] = useState(null);
 
   // Pre-fill name from auth user
   React.useEffect(() => {
@@ -36,25 +33,11 @@ function ClientProfile() {
     }));
   };
 
-  const handleFileChange = (file) => {
-    setSelectedFile(file);
-  };
-
   const handleSaveProfile = async () => {
     try {
-      const formData = new FormData();
-      Object.keys(profileData).forEach(key => {
-        formData.append(key, profileData[key]);
-      });
-
-      if (selectedFile) {
-        formData.append("resume", selectedFile);
-      }
-
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/profile`, formData, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/profile`, profileData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data"
         }
       });
 
@@ -75,11 +58,6 @@ function ClientProfile() {
         className="max-w-4xl mx-auto p-8 bg-white shadow-md rounded-lg"
       >
         <p className="text-2xl font-semibold text-gray-700 mb-6">Create Profile</p>
-
-        <div className="mb-6">
-          <Profile onImageSelect={handleFileChange} />
-          <p className="text-center text-gray-500">Click Logo to upload your profile</p>
-        </div>
 
         { }
         <div className="mb-6">
