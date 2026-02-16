@@ -1,4 +1,4 @@
-# 💼 Freelancer Platform – MERN Stack Website
+# 🔥HireElite - Freelancer Platform – MERN Stack Website
 
 A full-stack MERN (MongoDB, Express, React, Node.js) Real-time web application that connects clients and freelancers through a role-based system for posting projects, applying to jobs, managing profiles, and handling project workflows.
 
