@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../context/AuthContext";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API = import.meta.env.VITE_API_URL || "https://freelancer-website-api.onrender.com";
 
 function ClientProfile() {
   const { token, user, refreshProfileStatus } = useContext(AuthContext);
@@ -36,6 +36,7 @@ function ClientProfile() {
   };
 
   const handleSaveProfile = async () => {
+    alert("Saving Profile...");
     console.log("Attempting to save profile...");
     console.log("API URL:", API);
     console.log("Profile Data:", profileData);

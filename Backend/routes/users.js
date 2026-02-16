@@ -36,18 +36,15 @@ router.get("/me", authMiddleware, async (req, res) => {
 });
 
 // PUT /api/users/profile - Update user profile
-const upload = require("../middleware/upload");
+router.put("/profile", authMiddleware, async (req, res) => {
+    console.log("PUT /api/users/profile reached");
+    console.log("User ID:", req.user.id);
+    console.log("Request Body:", req.body);
 
-router.put("/profile", authMiddleware, upload.single("resume"), async (req, res) => {
     try {
         const updates = {};
         for (const key in req.body) {
             updates[key] = sanitize(req.body[key]);
-        }
-
-        // Handle file upload
-        if (req.file) {
-            updates.resume = req.file.path; // Save file path to user.resume
         }
 
         // Prevent updating sensitive fields via this route
@@ -64,8 +61,10 @@ router.put("/profile", authMiddleware, upload.single("resume"), async (req, res)
             { new: true, runValidators: true }
         ).select("-password");
 
+        console.log("Profile updated successfully for user:", req.user.id);
         res.json(user);
     } catch (err) {
+        console.error("Error in PUT /api/users/profile:", err);
         res.status(500).json({ message: err.message });
     }
 });
