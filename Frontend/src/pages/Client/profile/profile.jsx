@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../context/AuthContext";
 
+const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function ClientProfile() {
   const { token, user, refreshProfileStatus } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -34,19 +36,24 @@ function ClientProfile() {
   };
 
   const handleSaveProfile = async () => {
+    console.log("Attempting to save profile...");
+    console.log("API URL:", API);
+    console.log("Profile Data:", profileData);
+
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/profile`, profileData, {
+      const response = await axios.put(`${API}/api/users/profile`, profileData, {
         headers: {
           Authorization: `Bearer ${token}`,
         }
       });
 
+      console.log("Profile update response:", response.data);
       await refreshProfileStatus();
 
       alert("Profile Updated Successfully!");
       navigate("/ClientDashboard");
     } catch (err) {
-      console.error(err);
+      console.error("Profile update error:", err);
       alert(err.response?.data?.message || "Failed to update profile");
     }
   };
