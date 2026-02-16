@@ -36,15 +36,32 @@ router.get("/me", authMiddleware, async (req, res) => {
 });
 
 // PUT /api/users/profile - Update user profile
-router.put("/profile", authMiddleware, async (req, res) => {
+const upload = require("../middleware/upload");
+
+router.put("/profile", authMiddleware, (req, res, next) => {
+    // Wrap multer to handle errors and proceed even if it's not multipart
+    upload.single("resume")(req, res, (err) => {
+        if (err) {
+            console.error("Multer error:", err);
+        }
+        next();
+    });
+}, async (req, res) => {
     console.log("PUT /api/users/profile reached");
     console.log("User ID:", req.user.id);
     console.log("Request Body:", req.body);
+    console.log("File:", req.file);
 
     try {
+        const data = req.body;
         const updates = {};
-        for (const key in req.body) {
-            updates[key] = sanitize(req.body[key]);
+        for (const key in data) {
+            updates[key] = sanitize(data[key]);
+        }
+
+        // Handle file upload
+        if (req.file) {
+            updates.resume = req.file.path;
         }
 
         // Prevent updating sensitive fields via this route
