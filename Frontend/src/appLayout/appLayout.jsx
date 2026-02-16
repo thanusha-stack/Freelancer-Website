@@ -11,7 +11,7 @@ const FLHome = lazy(() => import('../pages/Freelancer/home/home'));
 const FLDashboard = lazy(() => import('../pages/Freelancer/Dashboard/Dashboard'));
 const Certify = lazy(() => import('../pages/Freelancer/Certificy/Certify'));
 const ClientProfileCreate = lazy(() => import('../components/ClientProfileCreate/ClientProfileCreate'));
-const ClientProfile = lazy(() => import('../pages/Client/profile/profile'));
+const ClientProfile = lazy(() => import('../pages/Client/profile/ClientProfileNew'));
 const ClientHome = lazy(() => import('../pages/Client/ClientHome/ClientHome'));
 const ClientDashboard = lazy(() => import('../pages/Client/ClientDashboard/ClientDashboard'));
 const PostProject = lazy(() => import('../pages/Client/PostProject/Post'));
