@@ -51,7 +51,6 @@ In this showcase, I have included selected files in the `src_highlights/` direct
 - **Backend**: Node.js, Express.js.
 - **Database**: MongoDB & Mongoose.
 - **Security**: JWT, Bcrypt.js, Helmet, DOMPurify.
-- **Payments**: Milestone & Hiring Logic (Razorpay-ready architectural foundation).
 
 ---
 
