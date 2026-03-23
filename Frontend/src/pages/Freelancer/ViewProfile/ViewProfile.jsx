@@ -5,7 +5,8 @@ import useFetch from '../../../hooks/useFetch';
 const ProfileCard = () => {
   const { id } = useParams();
   const fetchUrl = id ? `/api/users/${id}` : "/api/users/me";
-  const { data: user, loading } = useFetch(fetchUrl);
+  const { data: user, loading, error } = useFetch(fetchUrl);
+  console.log("ViewProfile loading:", loading, "error:", error, "user:", user);
 
   const profileData = user ? {
     image: "https://via.placeholder.com/150",
@@ -21,9 +22,39 @@ const ProfileCard = () => {
     videoSrc: "https://www.w3schools.com/html/mov_bbb.mp4"
   } : null;
 
-  if (!profileData) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+        <p className="ml-4 text-gray-600 font-medium">Loading profile...</p>
+      </div>
+    );
   }
+
+  if (error) {
+    return (
+      <div className="max-w-4xl mx-auto mt-10 p-8 bg-white shadow-lg rounded-lg text-center">
+        <h2 className="text-2xl font-bold text-red-500 mb-4">Error Loading Profile</h2>
+        <p className="text-gray-700 mb-6">{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  if (!profileData) {
+    return (
+      <div className="max-w-4xl mx-auto mt-10 p-8 bg-white shadow-lg rounded-lg text-center">
+        <h2 className="text-2xl font-bold text-gray-700 mb-4">Profile Not Found</h2>
+        <p className="text-gray-600">The requested freelancer profile could not be found.</p>
+      </div>
+    );
+  }
+
 
   return (
     <div className="mx-auto p-8 bg-white shadow-lg rounded-lg flex">

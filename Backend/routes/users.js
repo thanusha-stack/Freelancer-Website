@@ -35,6 +35,21 @@ router.get("/me", authMiddleware, async (req, res) => {
     }
 });
 
+// GET /api/users/:id - Get specific user profile (public)
+router.get("/:id", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select("-password -googleId");
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(user);
+    } catch (err) {
+        console.error("Error in GET /api/users/:id:", err);
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
 // PUT /api/users/profile - Update user profile
 const upload = require("../middleware/upload");
 
