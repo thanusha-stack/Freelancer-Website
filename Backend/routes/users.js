@@ -71,8 +71,18 @@ router.put("/profile", authMiddleware, (req, res, next) => {
         const data = req.body;
         const updates = {};
         for (const key in data) {
-            updates[key] = sanitize(data[key]);
+            if ((key === "experience" || key === "education") && typeof data[key] === "string") {
+                try {
+                    updates[key] = JSON.parse(data[key]);
+                } catch (e) {
+                    console.error(`Failed to parse ${key}:`, e);
+                    updates[key] = data[key];
+                }
+            } else {
+                updates[key] = sanitize(data[key]);
+            }
         }
+
 
         // Handle file upload
         if (req.file) {

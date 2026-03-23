@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 
-const FreelancerCard = ({ name, role, hourlyRate, jobSuccess, tags, image }) => (
+const FreelancerCard = ({ id, name, role, hourlyRate, jobSuccess, tags, image }) => (
   <div className="flex flex-col justify-between p-4 bg-white border border-gray-300 rounded-lg shadow-md">
     <div className="flex w-full items-center">
       <div>
@@ -26,7 +26,7 @@ const FreelancerCard = ({ name, role, hourlyRate, jobSuccess, tags, image }) => 
         </span>
       ))}
     </div>
-      <Link to="/FLViewProfile">
+      <Link to={id ? `/FLViewProfile/${id}` : "/FLViewProfile"}>
     <button className="mt-4 border border-orange-500 text-orange-500 font-semibold px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white">
       View Profile
     </button>

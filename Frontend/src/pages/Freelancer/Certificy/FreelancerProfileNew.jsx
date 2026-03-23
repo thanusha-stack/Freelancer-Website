@@ -12,16 +12,29 @@ const FreelancerProfileNew = () => {
 
     const [formData, setFormData] = useState({
         name: "",
-        description: "",
+        bio: "",
+        videoUrl: "",
         skill: "Web Development",
-        experience: "Beginner",
+        experienceLevel: "Beginner",
         language: "Beginner",
         rate: "",
         location: "",
         country: "India",
         phone: "",
         dob: "",
+        // Work History (single entry for simplification)
+        jobTitle: "",
+        employer: "",
+        workDuration: "",
+        workDescription: "",
+        // Education
+        degree: "",
+        school: "",
+        field: "",
+        eduDuration: "",
+        graduationYear: "",
     });
+
 
     const [selectedFile, setSelectedFile] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,9 +72,10 @@ const FreelancerProfileNew = () => {
         try {
             const data = new FormData();
             data.append("name", formData.name);
-            data.append("description", formData.description);
+            data.append("bio", formData.bio);
+            data.append("videoUrl", formData.videoUrl);
             data.append("skills", formData.skill);
-            data.append("experienceLevel", formData.experience);
+            data.append("experienceLevel", formData.experienceLevel);
             data.append("language", formData.language);
             data.append("hourlyRate", formData.rate);
             data.append("location", formData.location);
@@ -69,8 +83,28 @@ const FreelancerProfileNew = () => {
             data.append("phone", formData.phone);
             data.append("dob", formData.dob);
 
+            // Construct experience and education arrays
+            const experience = [{
+                jobTitle: formData.jobTitle,
+                employer: formData.employer,
+                duration: formData.workDuration, // Note: model has duration and location added
+                description: formData.workDescription,
+                location: formData.location // Reuse city
+            }];
+            const education = [{
+                degree: formData.degree,
+                school: formData.school,
+                field: formData.field,
+                duration: formData.eduDuration,
+                graduationYear: Number(formData.graduationYear) || undefined
+            }];
+
+            data.append("experience", JSON.stringify(experience));
+            data.append("education", JSON.stringify(education));
+
             if (selectedFile) {
                 data.append("resume", selectedFile);
+
                 alert(`Step 2: Including Resume: ${selectedFile.name}`);
             } else {
                 alert("Step 2: No Resume selected. Proceeding anyway...");
@@ -196,8 +230,8 @@ const FreelancerProfileNew = () => {
                             <div className="space-y-1">
                                 <label className="text-sm font-semibold text-slate-700">Experience Level</label>
                                 <select
-                                    name="experience"
-                                    value={formData.experience}
+                                    name="experienceLevel"
+                                    value={formData.experienceLevel}
                                     onChange={handleChange}
                                     className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none appearance-none bg-white font-sans"
                                 >
@@ -286,19 +320,150 @@ const FreelancerProfileNew = () => {
                             </div>
                         </div>
 
-                        {/* Overview */}
+                        {/* Professional Summary */}
                         <div className="space-y-1">
-                            <label className="text-sm font-semibold text-slate-700">Professional Overview</label>
+                            <label className="text-sm font-semibold text-slate-700">Professional Summary</label>
                             <textarea
                                 required
-                                name="description"
-                                value={formData.description}
+                                name="bio"
+                                value={formData.bio}
                                 onChange={handleChange}
-                                rows="5"
+                                rows="4"
                                 className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none resize-none font-sans"
-                                placeholder="I am a passionate web developer with 3 years of experience in React and Node.js..."
+                                placeholder="Briefly describe your professional background and key strengths..."
                             />
                         </div>
+
+                        {/* Video URL */}
+                        <div className="space-y-1">
+                            <label className="text-sm font-semibold text-slate-700">Profile Video URL (Optional)</label>
+                            <input
+                                type="url"
+                                name="videoUrl"
+                                value={formData.videoUrl}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                                placeholder="https://youtube.com/watch?v=... or direct mp4 link"
+                            />
+                        </div>
+
+                        {/* Work History Section */}
+                        <div className="pt-4">
+                            <div className="col-span-full pb-2 border-b border-slate-100 mb-4">
+                                <h3 className="text-lg font-bold text-slate-800">4. Work History</h3>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-1">
+                                    <label className="text-sm font-semibold text-slate-700">Recent Job Title</label>
+                                    <input
+                                        type="text"
+                                        name="jobTitle"
+                                        value={formData.jobTitle}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                                        placeholder="e.g. Senior Web Developer"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-semibold text-slate-700">Employer / Company</label>
+                                    <input
+                                        type="text"
+                                        name="employer"
+                                        value={formData.employer}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                                        placeholder="e.g. Tech Solutions Inc."
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-semibold text-slate-700">Duration</label>
+                                    <input
+                                        type="text"
+                                        name="workDuration"
+                                        value={formData.workDuration}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                                        placeholder="e.g. Jan 2021 - Present"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-semibold text-slate-700">Brief Description</label>
+                                    <input
+                                        type="text"
+                                        name="workDescription"
+                                        value={formData.workDescription}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                                        placeholder="Briefly describe your role"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Education Section */}
+                        <div className="pt-4">
+                            <div className="col-span-full pb-2 border-b border-slate-100 mb-4">
+                                <h3 className="text-lg font-bold text-slate-800">5. Education</h3>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-1">
+                                    <label className="text-sm font-semibold text-slate-700">Degree</label>
+                                    <input
+                                        type="text"
+                                        name="degree"
+                                        value={formData.degree}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                                        placeholder="e.g. Bachelor of Technology"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-semibold text-slate-700">Field of Study</label>
+                                    <input
+                                        type="text"
+                                        name="field"
+                                        value={formData.field}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                                        placeholder="e.g. Computer Science"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-semibold text-slate-700">School / University</label>
+                                    <input
+                                        type="text"
+                                        name="school"
+                                        value={formData.school}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                                        placeholder="e.g. Stanford University"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-semibold text-slate-700">Graduation Year</label>
+                                    <input
+                                        type="number"
+                                        name="graduationYear"
+                                        value={formData.graduationYear}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                                        placeholder="e.g. 2022"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm font-semibold text-slate-700">Duration / Year</label>
+                                    <input
+                                        type="text"
+                                        name="eduDuration"
+                                        value={formData.eduDuration}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all outline-none"
+                                        placeholder="e.g. 2018 - 2022"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
 
                         {/* Submit Button */}
                         <div className="pt-6">

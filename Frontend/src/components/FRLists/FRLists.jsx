@@ -20,6 +20,7 @@ const FreelancerPage = () => {
       jobSuccess: 95, 
       tags: user.skills || [],
       image: user.profilePhoto || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name) + '&size=200&background=random',
+      id: user._id,
     }));
 
   return (

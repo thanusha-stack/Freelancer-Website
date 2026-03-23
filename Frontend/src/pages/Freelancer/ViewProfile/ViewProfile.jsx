@@ -8,18 +8,17 @@ const ProfileCard = () => {
   const { data: user, loading, error } = useFetch(fetchUrl);
 
   const profileData = user ? {
-
-    image: "https://via.placeholder.com/150",
+    image: user.profilePhoto || "https://via.placeholder.com/150",
     name: user.name,
-    location: "Remote",
+    location: user.location || "Remote",
     email: user.email,
-    phone: "N/A",
+    phone: user.phone || "N/A",
     rating: 5,
     rate: user.hourlyRate ? `$${user.hourlyRate}/hr` : "Negotiable",
-    summary: user.bio || "No summary provided.",
-    workHistory: user.experience?.[0] || {},
-    education: user.education?.[0] || {},
-    videoSrc: "https://www.w3schools.com/html/mov_bbb.mp4"
+    summary: user.bio || user.description || "No summary provided.",
+    workHistory: user.experience && user.experience.length > 0 ? user.experience[0] : null,
+    education: user.education && user.education.length > 0 ? user.education[0] : null,
+    videoSrc: user.videoUrl || ""
   } : null;
 
   if (loading) {
@@ -95,7 +94,7 @@ const ProfileCard = () => {
         </button>
       </div>
 
-      { }
+      {/* Right Section: Main Info */}
       <div className="w-2/3 pl-6 overflow-y-auto">
         <h3 className="text-2xl font-bold text-orange-500 mb-4">
           Professional Summary
@@ -104,37 +103,52 @@ const ProfileCard = () => {
           {profileData.summary}
         </p>
 
-        <div className="grid grid-cols-2 gap-6 mt-6">
-          <div>
-            <h4 className="text-xl font-bold mb-2">Work History</h4>
-            <p><strong>Job Title:</strong> {profileData.workHistory.jobTitle}</p>
-            <p><strong>Position:</strong> {profileData.workHistory.position}</p>
-            <p><strong>Employer:</strong> {profileData.workHistory.employer}</p>
-            <p><strong>Location:</strong> {profileData.workHistory.location}</p>
-            <p><strong>Duration:</strong> {profileData.workHistory.duration}</p>
-            <p>{profileData.workHistory.description}</p>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          {profileData.workHistory && (
+            <div>
+              <h4 className="text-xl font-bold mb-2 border-b-2 border-orange-200 pb-1">Work History</h4>
+              <div className="space-y-1 mt-2">
+                {profileData.workHistory.jobTitle && <p><strong>Job Title:</strong> {profileData.workHistory.jobTitle}</p>}
+                {profileData.workHistory.employer && <p><strong>Employer:</strong> {profileData.workHistory.employer}</p>}
+                {profileData.workHistory.location && <p><strong>Location:</strong> {profileData.workHistory.location}</p>}
+                {profileData.workHistory.duration && <p><strong>Duration:</strong> {profileData.workHistory.duration}</p>}
+                {profileData.workHistory.description && <p className="mt-2 text-sm text-gray-600 italic">{profileData.workHistory.description}</p>}
+              </div>
+            </div>
+          )}
 
-          <div>
-            <h4 className="text-xl font-bold mb-2">Education</h4>
-            <p><strong>Degree:</strong> {profileData.education.degree}</p>
-            <p><strong>Field:</strong> {profileData.education.field}</p>
-            <p><strong>Duration:</strong> {profileData.education.duration}</p>
-          </div>
+          {profileData.education && (
+            <div>
+              <h4 className="text-xl font-bold mb-2 border-b-2 border-orange-200 pb-1">Education</h4>
+              <div className="space-y-1 mt-2">
+                {profileData.education.degree && <p><strong>Degree:</strong> {profileData.education.degree}</p>}
+                {profileData.education.school && <p><strong>School:</strong> {profileData.education.school}</p>}
+                {profileData.education.field && <p><strong>Field:</strong> {profileData.education.field}</p>}
+                {profileData.education.graduationYear && <p><strong>Graduation:</strong> {profileData.education.graduationYear}</p>}
+                {profileData.education.duration && <p><strong>Duration:</strong> {profileData.education.duration}</p>}
+              </div>
+            </div>
+          )}
         </div>
 
-        <div className="mt-6">
-          <h4 className="text-xl font-bold mb-2">Applicant Video</h4>
-          <video
-            controls
-            className="w-full h-auto rounded-lg shadow-md"
-          >
-            <source src={profileData.videoSrc} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
-
+        {profileData.videoSrc && (
+          <div className="mt-8">
+            <h4 className="text-xl font-bold mb-3">Applicant Video</h4>
+            <div className="aspect-video w-full">
+              <iframe
+                className="w-full h-full rounded-lg shadow-md"
+                src={profileData.videoSrc.includes("youtube.com") || profileData.videoSrc.includes("youtu.be")
+                  ? profileData.videoSrc.replace("watch?v=", "embed/").split("&")[0]
+                  : profileData.videoSrc}
+                title="Applicant Video"
+                allowFullScreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              ></iframe>
+            </div>
+          </div>
+        )}
       </div>
+
     </div>
   );
 };
