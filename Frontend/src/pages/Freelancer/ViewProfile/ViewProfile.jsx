@@ -6,9 +6,9 @@ const ProfileCard = () => {
   const { id } = useParams();
   const fetchUrl = id ? `/api/users/${id}` : "/api/users/me";
   const { data: user, loading, error } = useFetch(fetchUrl);
-  console.log("ViewProfile loading:", loading, "error:", error, "user:", user);
 
   const profileData = user ? {
+
     image: "https://via.placeholder.com/150",
     name: user.name,
     location: "Remote",
