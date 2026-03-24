@@ -20,6 +20,8 @@ const userSchema = new mongoose.Schema({
     description: { type: String, default: "" }, 
     profilePhoto: { type: String, default: "" }, 
     videoUrl: { type: String, default: "" }, 
+    videoLikes: { type: Number, default: 0 },
+    profileViews: { type: Number, default: 0 },
     companyName: { type: String, default: "" },
     contactPerson: { type: String, default: "" },
     website: { type: String, default: "" },

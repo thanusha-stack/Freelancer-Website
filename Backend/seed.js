@@ -100,7 +100,26 @@ const freelancers = [
         hourlyRate: 75,
         bio: "Full-stack developer specializing in MERN stack with 5+ years of experience building scalable web applications.",
         language: "English",
-        profilePhoto: "https://ui-avatars.com/api/?name=Alex+Thompson&size=200&background=3B82F6&color=fff"
+        profilePhoto: "https://ui-avatars.com/api/?name=Alex+Thompson&size=200&background=3B82F6&color=fff",
+        videoLikes: 124,
+        profileViews: 1540
+    },
+    {
+        name: "Leo Thomas",
+        email: "leo@gmail.com",
+        password: "Freelancer123!",
+        role: "freelancer",
+        isProfileComplete: true,
+        skills: ["Frontend Development", "React", "Tailwind CSS"],
+        experienceLevel: "Pro",
+        hourlyRate: 25,
+        bio: "Innovative Web Developer with over 8 years of experience in dynamic tech environments, specializing in front-end technologies and responsive design. Proven track record of increasing user engagement by 30% and optimizing web performance by 25%. Expert in React, Node.js, and implementing scalable RESTful APIs to deliver high-quality web applications.",
+        language: "English",
+        location: "Mumbai",
+        profilePhoto: "https://ui-avatars.com/api/?name=Leo+Thomas&size=200&background=F97316&color=fff",
+        videoLikes: 450,
+        profileViews: 2800,
+        videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     },
     {
         name: "Priya Sharma",
@@ -113,7 +132,6 @@ const freelancers = [
         hourlyRate: 60,
         bio: "Creative UI/UX designer passionate about creating intuitive and beautiful user experiences.",
         language: "English",
-        profilePhoto: "https://ui-avatars.com/api/?name=Priya+Sharma&size=200&background=EC4899&color=fff"
     },
     {
         name: "James Wilson",
@@ -417,10 +435,11 @@ async function seedDatabase() {
         console.log("\n🗑️  Clearing existing data...");
         await User.deleteMany({});
         await Project.deleteMany({});
-        console.log("✅ Existing data cleared");
+        console.log("✅ Existing data cleared");
         console.log("\n👥 Creating clients...");
         const createdClients = [];
         for (const client of clients) {
+            console.log(`   Creating client: ${client.name}...`);
             const hashedPassword = await bcrypt.hash(client.password, 10);
             const newClient = await User.create({
                 ...client,
@@ -428,7 +447,7 @@ async function seedDatabase() {
             });
             createdClients.push(newClient);
             console.log(`   ✓ Created client: ${client.name} (${client.email})`);
-        }
+        }
         console.log("\n💼 Creating freelancers...");
         for (const freelancer of freelancers) {
             const hashedPassword = await bcrypt.hash(freelancer.password, 10);

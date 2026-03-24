@@ -36,7 +36,7 @@ const JobsListPage = lazy(() => import('../components/JobLists/JobLists'));
 const JobsDash = lazy(() => import('../components/JobSection/jobsDash'));
 const JobsCard = lazy(() => import('../components/JobLists/JobsCard.jsx/JobsCard'));
 const Profile = lazy(() => import('../pages/Freelancer/Certificy/profile/Profile'));
-const { ProfileProvider } = lazy(() => import('../pages/Freelancer/Certificy/profile/profileProvider/profilrprovider'));
+const ProfileProvider = lazy(() => import('../pages/Freelancer/Certificy/profile/profileProvider/profilrprovider').then(module => ({ default: module.ProfileProvider })));
 
 // Loading component
 const PageLoader = () => (
