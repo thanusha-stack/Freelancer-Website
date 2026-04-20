@@ -40,7 +40,7 @@ function SubHeader() {
 
   return (
     <>
-      <div className="bg-black shadow-md shadow-gray-500">
+      <div className="bg-gray-900/95 backdrop-blur-md border-b-2 border-indigo-500/20 shadow-lg sticky top-0 z-50 font-sans transition-all duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between py-3 px-3">
           {}
           <svg

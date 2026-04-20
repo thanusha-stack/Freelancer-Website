@@ -53,4 +53,7 @@ const userSchema = new mongoose.Schema({
     ],
 });
 
+userSchema.index({ role: 1 });
+userSchema.index({ name: 'text', email: 'text' });
+
 module.exports = mongoose.model("User", userSchema);
