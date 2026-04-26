@@ -51,7 +51,18 @@ const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/freelancer
 
 mongoose
   .connect(MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
+  .then(async () => {
+    console.log("MongoDB connected");
+    // Auto-seed RAG knowledge base on startup
+    try {
+      const { ingestDocuments } = require("./services/ragService");
+      ingestDocuments()
+        .then(r => console.log("✅ HireBot knowledge base ready:", r))
+        .catch(e => console.warn("⚠️  RAG ingestion failed (non-fatal):", e.message));
+    } catch (e) {
+      console.warn("⚠️  RAG service unavailable:", e.message);
+    }
+  })
   .catch((err) => console.log(err));
 
 // Routes
