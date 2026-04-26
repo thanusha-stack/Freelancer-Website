@@ -198,8 +198,8 @@ const AIChat = () => {
                     <div className="ai-chat-header">
                         <div className="ai-chat-header-avatar">🤖</div>
                         <div className="ai-chat-header-info">
-                            <div className="ai-chat-header-name">HireBot</div>
-                            <div className="ai-chat-header-status">Online · AI Assistant</div>
+                            <div className="ai-chat-header-name">HireBot — HireElite AI</div>
+                            <div className="ai-chat-header-status">Online · Ready to help</div>
                         </div>
                         <button
                             id="ai-chat-close-btn"
@@ -211,18 +211,23 @@ const AIChat = () => {
                         </button>
                     </div>
 
+                    {/* Subheader */}
+                    <div className="ai-chat-subheader">
+                        💼 Ask me about projects, freelancers, or how HireElite works
+                    </div>
+
                     {/* Messages */}
                     <div className="ai-chat-messages" id="ai-chat-messages">
                         {messages.length === 0 && !isLoading && (
                             <div className="ai-chat-empty">
-                                <div className="ai-chat-empty-icon">🤖</div>
+                                <div className="ai-chat-empty-icon">💼</div>
                                 <h4>Hi, I'm HireBot!</h4>
                                 <p>
                                     {userRole === "freelancer"
-                                        ? "Ask me to find projects that match your skills, or anything about HireElite."
+                                        ? "I can find projects that match your skills, check deadlines & budgets, or explain how to apply."
                                         : userRole === "client"
-                                        ? "Ask me to find skilled freelancers, or anything about HireElite."
-                                        : "I can help you find projects, freelancers, or answer questions about HireElite."}
+                                        ? "I can find skilled freelancers, suggest candidates for your project, or explain how posting works."
+                                        : "I can help you find projects, discover talented freelancers, or answer any question about HireElite."}
                                 </p>
                             </div>
                         )}
@@ -280,11 +285,16 @@ const AIChat = () => {
                         </div>
                     )}
 
+                    {/* Footer branding */}
+                    <div className="ai-chat-footer">
+                        Powered by <span>HireElite AI</span> · Gemini
+                    </div>
+
                     {/* Input area */}
                     <div className="ai-chat-input-area">
                         {!isLoggedIn ? (
-                            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12.5px", margin: "0 auto", fontFamily: "Inter, sans-serif" }}>
-                                Please <a href="/Login" style={{ color: "#a5b4fc" }}>log in</a> to chat with HireBot.
+                            <p style={{ color: "#6b7280", fontSize: "12.5px", margin: "0 auto", fontFamily: "Inter, sans-serif" }}>
+                                Please <a href="/Login" style={{ color: "#f97316", fontWeight: 600 }}>log in</a> to chat with HireBot.
                             </p>
                         ) : (
                             <>
