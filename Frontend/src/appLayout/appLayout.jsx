@@ -4,6 +4,8 @@ import Footer from '../components/footer/footer';
 import FloatBar from '../components/FloatBar/FloatBar';
 import ProtectedRoutes from "../routes/ProtectedRoutes";
 import { Routes, Route } from "react-router-dom";
+import AIChat from '../components/AIChat/AIChat';
+
 
 // Lazy loaded components
 const MainDashboard = lazy(() => import('../pages/MainDashboard'));
@@ -116,6 +118,7 @@ function App() {
         </Suspense>
       </div>
       <FloatBar />
+      <AIChat />
     </>
   );
 }

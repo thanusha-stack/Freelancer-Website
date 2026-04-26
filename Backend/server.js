@@ -60,6 +60,7 @@ app.use("/api/projects", require("./routes/projects"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/applications", require("./routes/applications"));
 app.use("/api/notifications", require("./routes/notifications"));
+app.use("/api/rag", require("./routes/rag")); // RAG AI assistant
 
 // Basic Route for testing
 app.get("/", (req, res) => {
