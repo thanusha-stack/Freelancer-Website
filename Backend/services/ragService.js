@@ -40,7 +40,7 @@ const FAQ_DOCS = [
 
 // ─── Embed a single piece of text using Gemini ────────────────────────────────
 async function embedText(text) {
-    const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
+    const model = genAI.getGenerativeModel({ model: "gemini-embedding-2" });
     const result = await model.embedContent(text);
     return result.embedding.values; // float array
 }
@@ -266,7 +266,7 @@ async function ragChat(query, userRole = "client") {
     // 4. Build prompt and call Gemini
     const prompt = buildPrompt(query, topDocs, userRole);
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const result = await model.generateContent(prompt);
     const answer = result.response.text();
 

@@ -53,12 +53,19 @@ mongoose
   .connect(MONGO_URI)
   .then(async () => {
     console.log("MongoDB connected");
-    // Auto-seed RAG knowledge base on startup
+    // Auto-seed RAG knowledge base on startup (only if empty)
     try {
+      const Embedding = require("./models/Embedding");
       const { ingestDocuments } = require("./services/ragService");
-      ingestDocuments()
-        .then(r => console.log("✅ HireBot knowledge base ready:", r))
-        .catch(e => console.warn("⚠️  RAG ingestion failed (non-fatal):", e.message));
+      const count = await Embedding.countDocuments();
+      if (count === 0) {
+        console.log("📚 Knowledge base empty — starting ingestion...");
+        ingestDocuments()
+          .then(r => console.log("✅ HireBot knowledge base ready:", r))
+          .catch(e => console.warn("⚠️  RAG ingestion failed (non-fatal):", e.message));
+      } else {
+        console.log(`✅ HireBot knowledge base already populated (${count} docs)`);
+      }
     } catch (e) {
       console.warn("⚠️  RAG service unavailable:", e.message);
     }
